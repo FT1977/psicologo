@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Atención Psicológica | Espiritualidad y Vida</title>
+    <meta name="description" content="Plataforma de evaluación y atención psicológica del Psicólogo Fabio Torres.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta inspirada en Espiritualidad y Vida (Tonos tierra, luz, calma) */
+            --primary: #c29b6b; /* Dorado suave / Tierra */
+            --primary-dark: #8b6b43;
+            --accent: #4f46e5; /* El toque clínico de tus pruebas */
+            --bg-light: #faf9f6; /* Blanco Hueso */
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-light);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Fondo Etéreo */
+        .spiritual-bg {
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(194, 155, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(79, 70, 229, 0.05) 0%, transparent 50%);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+        }
+
+        /* Tarjetas de Pruebas */
+        .test-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .test-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -5px rgba(194, 155, 107, 0.15);
+            border-color: var(--primary);
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-start:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            transform: scale(1.02);
+        }
+
+        /* Animación suave de entrada */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <div class="spiritual-bg"></div>
+
+    <nav class="w-full py-6 px-6 md:px-12 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-amber-200 to-amber-500 rounded-full flex items-center justify-center text-white shadow-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </div>
+            <span class="font-bold text-xl tracking-wide text-slate-800">Espiritualidad y Vida</span>
+        </div>
+        <a href="https://www.facebook.com/groups/613189485870197" target="_blank" class="text-sm font-semibold text-slate-500 hover:text-amber-600 transition-colors uppercase tracking-widest hidden md:block">
+            Volver a la Comunidad
+        </a>
+    </nav>
+
+    <header class="text-center px-6 pt-12 pb-16 max-w-4xl mx-auto fade-in-up">
+        <p class="text-amber-600 font-bold uppercase tracking-[0.3em] text-xs mb-4">Psicólogo Fabio Torres</p>
+        <h1 class="text-4xl md:text-6xl text-slate-900 mb-6 leading-tight">
+            Sanando la mente, <br> <span class="italic text-slate-500">elevando el espíritu.</span>
+        </h1>
+        <p class="text-slate-600 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-8">
+            Bienvenido al portal de evaluación clínica. Aquí integramos la evidencia científica con una visión humana y trascendente para acompañar tu proceso de crecimiento.
+        </p>
+        <div class="w-24 h-1 bg-amber-400 mx-auto rounded-full"></div>
+    </header>
+
+    <main class="flex-grow px-6 pb-20">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-2xl font-bold text-slate-800 mb-10 text-center flex items-center justify-center gap-4">
+                <span class="w-12 h-px bg-slate-300"></span>
+                Instrumentos de Evaluación
+                <span class="w-12 h-px bg-slate-300"></span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <article class="test-card rounded-3xl p-8 flex flex-col items-center text-center fade-in-up delay-100">
+                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600 shadow-sm">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Perfil de Personalidad</h3>
+                    <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                        Evaluación científica BFI-10 para identificar sus fortalezas de carácter, rasgos dominantes y áreas de oportunidad.
+                    </p>
+                    <a href="bfi10.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">
+                        Iniciar Prueba
+                    </a>
+                </article>
+
+                <article class="test-card rounded-3xl p-8 flex flex-col items-center text-center fade-in-up delay-200">
+                    <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 text-emerald-600 shadow-sm">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Escala de Autoestima</h3>
+                    <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                        Instrumento RSES para medir su percepción de autovalía y satisfacción personal en el momento presente.
+                    </p>
+                    <a href="rosenberg.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">
+                        Iniciar Prueba
+                    </a>
+                </article>
+
+                <article class="test-card rounded-3xl p-8 flex flex-col items-center text-center fade-in-up delay-300">
+                    <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mb-6 text-slate-600 shadow-sm">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Inventario Clínico</h3>
+                    <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                        Prueba OCI-R para el análisis detallado de sintomatología ansiosa y patrones de comportamiento específicos.
+                    </p>
+                    <a href="ocir.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">
+                        Iniciar Prueba
+                    </a>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-8 text-slate-400 text-xs uppercase tracking-widest fade-in-up delay-300">
+        <p>© 2026 Espiritualidad y Vida • Psicología Clínica Integral</p>
+        <p class="mt-2 normal-case opacity-60">Buenaventura, Colombia</p>
+    </footer>
+
+</body>
+</html>

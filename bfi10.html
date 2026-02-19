@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación de Personalidad BFI-10 | Psic. Fabio Torres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5; /* Indigo para diferenciarse del azul OCI-R */
+            --primary-dark: #3730a3;
+            --bg-gradient: linear-gradient(135deg, #fdfbf7 0%, #eef2ff 100%);
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            margin: 0;
+            color: #1e293b;
+        }
+
+        /* Fondo Dinámico */
+        .dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 80% 10%, rgba(79, 70, 229, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 20% 90%, rgba(99, 102, 241, 0.08) 0%, transparent 40%);
+            animation: pulseBg 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseBg {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Contenedor */
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 1.5rem;
+            margin: auto;
+            position: relative;
+        }
+
+        .premium-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Animaciones */
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .fade-out { animation: fadeOut 0.3s ease-in forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.98); }
+        }
+
+        /* Botones de Opción BFI */
+        .btn-option {
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-option:active { transform: scale(0.98); }
+        .btn-option:hover:not(.active) {
+            background-color: #eef2ff;
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+        .btn-option.active {
+            background-color: var(--primary) !important;
+            color: white !important;
+            border-color: var(--primary);
+            box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.4);
+        }
+
+        /* Utilidades */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .progress-glow { box-shadow: 0 0 10px rgba(79, 70, 229, 0.5); }
+    </style>
+</head>
+
+<body>
+    <div class="dynamic-bg"></div>
+
+    <main class="app-container">
+        <div id="welcome-screen" class="premium-card rounded-[2rem] p-8 md:p-10 text-center fade-in">
+            <div class="mb-8">
+                <div class="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl rotate-3 transform hover:rotate-0 transition-transform duration-500">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">Perfil de Personalidad</h1>
+                <p class="text-indigo-600 font-bold tracking-widest uppercase text-[10px]">Psicólogo Fabio Torres • BFI-10</p>
+            </div>
+
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                Esta evaluación científica identifica sus rasgos principales de carácter para personalizar su estrategia terapéutica. Es breve y precisa.
+            </p>
+
+            <div class="space-y-4 mb-8">
+                <input type="text" id="patient-name" placeholder="Nombre completo" class="w-full p-4 bg-white border border-slate-200 rounded-xl focus:border-indigo-500 transition-all outline-none text-slate-700 font-semibold text-sm">
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" id="patient-age" placeholder="Edad" class="w-full p-4 bg-white border border-slate-200 rounded-xl focus:border-indigo-500 transition-all outline-none text-slate-700 font-semibold text-sm">
+                    <div class="relative">
+                        <select id="patient-job" class="w-full p-4 bg-white border border-slate-200 rounded-xl focus:border-indigo-500 transition-all outline-none text-slate-700 font-semibold text-sm appearance-none">
+                            <option value="" disabled selected>Ocupación</option>
+                            <option value="Estudiante">Estudiante</option>
+                            <option value="Empleado">Empleado</option>
+                            <option value="Independiente">Independiente</option>
+                            <option value="Hogar">Hogar</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="goToInstructions()" class="w-full bg-slate-900 hover:bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 active:scale-95 text-sm uppercase tracking-wide">
+                Iniciar Evaluación
+            </button>
+            
+            <button onclick="openPortal()" class="mt-8 text-slate-300 hover:text-indigo-500 text-[10px] font-black tracking-[0.2em] uppercase transition-colors">
+                Panel Profesional
+            </button>
+        </div>
+
+        <div id="instruction-screen" class="premium-card rounded-[2rem] p-10 text-center hidden">
+            <h2 class="text-2xl font-extrabold text-slate-900 mb-6">Instrucciones</h2>
+            
+            <div class="bg-indigo-50 p-6 rounded-2xl mb-8 text-left border border-indigo-100">
+                <p class="text-indigo-900 font-bold text-sm mb-2">Premisa:</p>
+                <p class="text-slate-600 text-sm italic">"Me veo a mí mismo como alguien que..."</p>
+            </div>
+
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                A continuación verá frases breves. Indique su nivel de acuerdo o desacuerdo con cada una. No piense demasiado, su primera reacción suele ser la más honesta.
+            </p>
+
+            <button onclick="startAssessment()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-1 active:scale-95 text-sm">
+                Entendido, comenzar
+            </button>
+        </div>
+
+        <div id="question-screen" class="premium-card rounded-[2rem] p-8 hidden">
+            <div class="mb-8">
+                <div class="flex justify-between items-end mb-4">
+                    <span class="text-[10px] font-black text-indigo-500 uppercase tracking-widest">BFI-10</span>
+                    <span id="progress-text" class="text-xs font-bold text-slate-400">1/10</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="progress-bar" class="bg-indigo-600 h-full rounded-full transition-all duration-500 progress-glow" style="width: 10%"></div>
+                </div>
+            </div>
+
+            <div class="min-h-[6rem] mb-6 flex flex-col justify-center">
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Me veo a mí mismo como alguien que...</p>
+                <h2 id="question-text" class="text-2xl font-bold text-slate-800 leading-tight"></h2>
+            </div>
+
+            <div class="space-y-2.5">
+                <button onclick="recordAnswer(1, this)" class="btn-option w-full text-left bg-white border border-slate-100 p-4 rounded-xl flex items-center justify-between group">
+                    <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Totalmente en desacuerdo</span>
+                    <span class="w-6 h-6 rounded-lg bg-slate-50 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">1</span>
+                </button>
+                <button onclick="recordAnswer(2, this)" class="btn-option w-full text-left bg-white border border-slate-100 p-4 rounded-xl flex items-center justify-between group">
+                    <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Un poco en desacuerdo</span>
+                    <span class="w-6 h-6 rounded-lg bg-slate-50 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">2</span>
+                </button>
+                <button onclick="recordAnswer(3, this)" class="btn-option w-full text-left bg-white border border-slate-100 p-4 rounded-xl flex items-center justify-between group">
+                    <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Ni de acuerdo ni en desacuerdo</span>
+                    <span class="w-6 h-6 rounded-lg bg-slate-50 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">3</span>
+                </button>
+                <button onclick="recordAnswer(4, this)" class="btn-option w-full text-left bg-white border border-slate-100 p-4 rounded-xl flex items-center justify-between group">
+                    <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Un poco de acuerdo</span>
+                    <span class="w-6 h-6 rounded-lg bg-slate-50 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">4</span>
+                </button>
+                <button onclick="recordAnswer(5, this)" class="btn-option w-full text-left bg-white border border-slate-100 p-4 rounded-xl flex items-center justify-between group">
+                    <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Totalmente de acuerdo</span>
+                    <span class="w-6 h-6 rounded-lg bg-slate-50 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">5</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="finish-screen" class="premium-card rounded-[2rem] p-10 text-center hidden">
+            <div id="upload-status">
+                <div class="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-indigo-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900">Analizando Rasgos...</h2>
+            </div>
+
+            <div id="final-actions" class="hidden fade-in">
+                <div class="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-2xl font-extrabold text-slate-900 mb-4">¡Perfil Completado!</h2>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                    Sus resultados han sido triangulados. Por favor, notifique al psicólogo para su revisión inmediata.
+                </p>
+                <button onclick="notifyWhatsApp()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.7 68.9 27.1 106.1 27.1h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.3-16.3-14.6-27.4-32.6-30.6-38.1-3.2-5.6-.3-8.6 2.5-11.4 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                    Confirmar por WhatsApp
+                </button>
+            </div>
+        </div>
+
+        <div id="psychologist-portal" class="premium-card rounded-[2rem] p-10 hidden fade-in">
+            <div class="flex items-center gap-4 mb-8 border-b border-slate-100 pb-6">
+                <div class="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                </div>
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900">Portal Clínico BFI-10</h2>
+                    <p class="text-[10px] text-indigo-500 font-bold uppercase">Solo Personal Autorizado</p>
+                </div>
+            </div>
+
+            <div id="auth-section">
+                <input type="password" id="admin-pass" placeholder="Clave de acceso" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl mb-4 outline-none font-bold text-center tracking-widest text-sm focus:bg-white focus:border-slate-900 transition-all">
+                <button onclick="unlockPortal()" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl shadow-lg text-sm">Ingresar</button>
+            </div>
+
+            <div id="results-viewer" class="hidden space-y-6 fade-in">
+                <textarea id="data-input" rows="2" placeholder="Pegue el código cifrado aquí..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-[10px] font-mono resize-none outline-none focus:border-indigo-500"></textarea>
+                <button onclick="processData()" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-100 text-sm">Decodificar Informe</button>
+
+                <div id="report-output" class="bg-white p-6 rounded-2xl border border-slate-100 text-sm hidden shadow-inner max-h-[400px] overflow-y-auto">
+                    </div>
+
+                <button onclick="closePortal()" class="w-full bg-slate-100 text-slate-500 font-bold py-4 rounded-xl hover:text-slate-800 text-xs uppercase">Cerrar Sesión</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /* --- CONFIGURACIÓN --- */
+        const PSICOLOGO_EMAIL = "psicologofabiotorres@gmail.com";
+        const WHATSAPP_NUMBER = "573216284300";
+        /* --------------------- */
+
+        // Ítems BFI-10 (Rammstedt & John, 2007)
+        // Pares Directos / Impares Inversos en lógica de array (0-based) se ajustará en el cálculo
+        const questions = [
+            "Es reservado/a",                         // 1. Extraversión (R)
+            "Confía en los demás",                    // 2. Amabilidad
+            "Tiende a ser perezoso/a",                // 3. Responsabilidad (R)
+            "Es relajado/a, maneja bien el estrés",   // 4. Neuroticismo (R - en realidad es Estabilidad Emocional)
+            "Tiene poco interés artístico",           // 5. Apertura (R)
+            "Es extrovertido/a, sociable",            // 6. Extraversión
+            "Tiende a encontrar defectos en los demás",// 7. Amabilidad (R)
+            "Hace los trabajos con cuidado y eficacia",// 8. Responsabilidad
+            "Se pone nervioso/a con facilidad",       // 9. Neuroticismo
+            "Tiene una imaginación activa"            // 10. Apertura
+        ];
+
+        let currentQ = 0;
+        let answers = []; // Guardará valores 1-5
+        let patient = { name: "", age: "", job: "" };
+        let generatedCode = "";
+
+        const screens = {
+            welcome: document.getElementById('welcome-screen'),
+            instruction: document.getElementById('instruction-screen'),
+            question: document.getElementById('question-screen'),
+            finish: document.getElementById('finish-screen'),
+            portal: document.getElementById('psychologist-portal')
+        };
+
+        function goToInstructions() {
+            patient.name = document.getElementById('patient-name').value.trim();
+            patient.age = document.getElementById('patient-age').value.trim();
+            patient.job = document.getElementById('patient-job').value;
+
+            if (!patient.name || !patient.age || !patient.job) {
+                alert("Complete todos los datos para continuar.");
+                return;
+            }
+            screens.welcome.classList.add('hidden');
+            screens.instruction.classList.remove('hidden');
+            screens.instruction.classList.add('fade-in');
+        }
+
+        function startAssessment() {
+            screens.instruction.classList.add('hidden');
+            screens.question.classList.remove('hidden');
+            screens.question.classList.add('fade-in');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('question-text').textContent = `...${questions[currentQ].charAt(0).toLowerCase() + questions[currentQ].slice(1)}`;
+            document.getElementById('progress-text').textContent = `${currentQ + 1}/${questions.length}`;
+            document.getElementById('progress-bar').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+            window.scrollTo(0,0);
+        }
+
+        function recordAnswer(value, btn) {
+            document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            setTimeout(() => {
+                answers[currentQ] = value;
+                currentQ++;
+                if (currentQ < questions.length) {
+                    screens.question.classList.add('fade-out');
+                    setTimeout(() => {
+                        showQuestion();
+                        document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
+                        screens.question.classList.remove('fade-out');
+                        screens.question.classList.add('fade-in');
+                        setTimeout(() => screens.question.classList.remove('fade-in'), 500);
+                    }, 250);
+                } else {
+                    calculateAndSend();
+                }
+            }, 200);
+        }
+
+        async function calculateAndSend() {
+            screens.question.classList.add('hidden');
+            screens.finish.classList.remove('hidden');
+            screens.finish.classList.add('fade-in');
+
+            // --- LÓGICA DE CALIFICACIÓN BFI-10 ---
+            // Ítems (1-based en array es 0-based):
+            // R = Inverso (6 - val)
+            // Extraversión (E): 1R, 6
+            // Amabilidad (A): 2, 7R
+            // Responsabilidad (C): 3R, 8
+            // Neuroticismo (N): 4R, 9  (Nota: Ítem 4 es "Relajado", invirtiéndolo da Neuroticismo)
+            // Apertura (O): 5R, 10
+
+            // Ajuste de índices (Array 0-9)
+            const v = answers; 
+            
+            // Función R: invierte puntaje 1-5
+            const r = (val) => 6 - val;
+
+            const scores = {
+                Extraversion: (r(v[0]) + v[5]) / 2,
+                Amabilidad: (v[1] + r(v[6])) / 2,
+                Responsabilidad: (r(v[2]) + v[7]) / 2,
+                Neuroticismo: (r(v[3]) + v[8]) / 2,
+                Apertura: (r(v[4]) + v[9]) / 2
+            };
+
+            const rawData = {
+                p: patient,
+                date: new Date().toLocaleString(),
+                s: scores,
+                raw: v
+            };
+
+            generatedCode = btoa(JSON.stringify(rawData));
+
+            // Construir Informe Email HTML
+            let reportHtml = `
+                PACIENTE: ${patient.name} (${patient.age} años)
+                OCUPACIÓN: ${patient.job}
+                FECHA: ${rawData.date}
+                
+                PERFIL DE PERSONALIDAD (BFI-10):
+                --------------------------------
+                1. EXTRAVERSIÓN: ${scores.Extraversion} / 5
+                2. AMABILIDAD: ${scores.Amabilidad} / 5
+                3. RESPONSABILIDAD: ${scores.Responsabilidad} / 5
+                4. NEUROTICISMO: ${scores.Neuroticismo} / 5
+                5. APERTURA: ${scores.Apertura} / 5
+                
+                ANÁLISIS DE FORTALEZAS/DEBILIDADES:
+                ${scores.Neuroticismo > 3.5 ? "[ALERTA] Alta vulnerabilidad emocional. Priorizar contención." : "[FORTALEZA] Estabilidad emocional adecuada."}
+                ${scores.Responsabilidad < 2.5 ? "[DEBILIDAD] Baja adherencia potencial. Requiere tareas simples." : "[FORTALEZA] Alta autodisciplina."}
+                ${scores.Extraversion < 2.5 ? "[NOTA] Perfil introvertido. Respetar latencia de respuesta." : "[NOTA] Perfil extrovertido."}
+            `;
+
+            try {
+                const formData = new FormData();
+                formData.append("message", reportHtml);
+                formData.append("_subject", `BFI-10: ${patient.name}`);
+                formData.append("_captcha", "false");
+                formData.append("email", PSICOLOGO_EMAIL); // Campo oculto de destino si soportado, o usar action url
+
+                await fetch(`https://formsubmit.co/ajax/${PSICOLOGO_EMAIL}`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                document.getElementById('upload-status').classList.add('hidden');
+                document.getElementById('final-actions').classList.remove('hidden');
+            } catch (e) {
+                // Fallback si falla el ajax (cors, etc), igual se muestra el botón de Whatsapp
+                document.getElementById('upload-status').classList.add('hidden');
+                document.getElementById('final-actions').classList.remove('hidden');
+            }
+        }
+
+        function notifyWhatsApp() {
+            const msg = `Hola Fabio, soy ${patient.name}. Completé el BFI-10.\n\nCódigo:\n${generatedCode}`;
+            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+        }
+
+        /* --- PORTAL --- */
+        function openPortal() {
+            Object.values(screens).forEach(s => s.classList.add('hidden'));
+            screens.portal.classList.remove('hidden');
+        }
+
+        function unlockPortal() {
+            if (document.getElementById('admin-pass').value === "zapato") {
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('results-viewer').classList.remove('hidden');
+            } else { alert("Acceso denegado"); }
+        }
+
+        function processData() {
+            const code = document.getElementById('data-input').value.trim();
+            if(!code) return;
+            try {
+                const data = JSON.parse(atob(code));
+                const s = data.s;
+                
+                let html = `
+                    <div class="border-b border-slate-100 pb-4 mb-4">
+                        <h3 class="font-bold text-lg text-slate-800">${data.p.name}</h3>
+                        <p class="text-xs text-slate-400 uppercase">${data.p.age} años • ${data.p.job}</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        ${renderBar("Extraversión", s.Extraversion, "bg-blue-500")}
+                        ${renderBar("Amabilidad", s.Amabilidad, "bg-green-500")}
+                        ${renderBar("Responsabilidad", s.Responsabilidad, "bg-purple-500")}
+                        ${renderBar("Neuroticismo", s.Neuroticismo, "bg-red-500")}
+                        ${renderBar("Apertura", s.Apertura, "bg-yellow-500")}
+                    </div>
+
+                    <div class="mt-6 bg-slate-50 p-3 rounded-xl text-xs text-slate-500 font-mono">
+                        ${s.Neuroticismo > 3.5 ? "⚠️ ALERTA: Neuroticismo Alto. Riesgo de desborde emocional." : "✅ Estabilidad Emocional: Rango funcional."}
+                        <br>
+                        ${s.Responsabilidad < 2.5 ? "⚠️ ALERTA: Responsabilidad Baja. Dificultad con tareas en casa." : "✅ Voluntad: Alta capacidad de ejecución."}
+                    </div>
+                `;
+                document.getElementById('report-output').innerHTML = html;
+                document.getElementById('report-output').classList.remove('hidden');
+            } catch(e) { alert("Código corrupto"); }
+        }
+
+        function renderBar(label, score, color) {
+            const pct = (score / 5) * 100;
+            return `
+                <div>
+                    <div class="flex justify-between text-xs font-bold mb-1">
+                        <span class="text-slate-600">${label}</span>
+                        <span class="text-slate-800">${score}</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2">
+                        <div class="${color} h-2 rounded-full" style="width: ${pct}%"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closePortal() { location.reload(); }
+    </script>
+</body>
+</html>
