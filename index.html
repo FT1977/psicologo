@@ -13,11 +13,10 @@
     
     <style>
         :root {
-            /* Paleta inspirada en Espiritualidad y Vida (Tonos tierra, luz, calma) */
             --primary: #c29b6b; /* Dorado suave / Tierra */
             --primary-dark: #8b6b43;
-            --accent: #4f46e5; /* El toque clínico de tus pruebas */
-            --bg-light: #faf9f6; /* Blanco Hueso */
+            --accent: #4f46e5;
+            --bg-light: #faf9f6; 
         }
 
         body {
@@ -25,6 +24,7 @@
             background-color: var(--bg-light);
             color: #333;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         h1, h2, h3 {
@@ -41,9 +41,8 @@
             z-index: -1;
         }
 
-        /* Tarjetas de Pruebas */
-        .test-card {
-            background: rgba(255, 255, 255, 0.8);
+        .test-card, .contact-card {
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.6);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -64,7 +63,6 @@
             transform: scale(1.02);
         }
 
-        /* Animación suave de entrada */
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out forwards;
             opacity: 0;
@@ -78,11 +76,77 @@
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
         .delay-300 { animation-delay: 0.3s; }
+
+        /* Botones Flotantes */
+        .floating-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 50;
+        }
+
+        .fab-btn {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .fab-btn:hover {
+            transform: scale(1.1) translateY(-4px);
+        }
+
+        .fab-whatsapp { background-color: #25D366; color: white; }
+        .fab-whatsapp:hover { box-shadow: 0 15px 30px -5px rgba(37, 211, 102, 0.4); }
+        
+        .fab-email { background-color: var(--primary); color: white; }
+        .fab-email:hover { box-shadow: 0 15px 30px -5px rgba(194, 155, 107, 0.4); }
+
+        /* Tooltip para botones flotantes */
+        .fab-btn::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 100%;
+            margin-right: 1rem;
+            background: rgba(30, 41, 59, 0.9);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateX(10px);
+            font-family: 'Outfit', sans-serif;
+        }
+        .fab-btn:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col relative">
     <div class="spiritual-bg"></div>
+
+    <div class="floating-widget">
+        <a href="mailto:psicologofabiotorres@gmail.com" data-tooltip="Escríbeme un correo" class="fab-btn fab-email">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        </a>
+        <a href="https://wa.me/573216284300?text=Hola%20Dr.%20Fabio,%20vengo%20de%20su%20página%20web%20y%20me%20gustaría%20agendar%20una%20sesión." target="_blank" rel="noopener noreferrer" data-tooltip="Atención por WhatsApp" class="fab-btn fab-whatsapp">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.7 68.9 27.1 106.1 27.1h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.3-16.3-14.6-27.4-32.6-30.6-38.1-3.2-5.6-.3-8.6 2.5-11.4 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+        </a>
+    </div>
 
     <nav class="w-full py-6 px-6 md:px-12 flex justify-between items-center max-w-7xl mx-auto">
         <div class="flex items-center gap-3">
@@ -91,9 +155,14 @@
             </div>
             <span class="font-bold text-xl tracking-wide text-slate-800">Espiritualidad y Vida</span>
         </div>
-        <a href="https://www.facebook.com/groups/613189485870197" target="_blank" class="text-sm font-semibold text-slate-500 hover:text-amber-600 transition-colors uppercase tracking-widest hidden md:block">
-            Volver a la Comunidad
-        </a>
+        <div class="hidden md:flex gap-6 items-center">
+            <a href="#contacto" class="text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors uppercase tracking-widest">
+                Agendar Cita
+            </a>
+            <a href="https://www.facebook.com/groups/613189485870197" target="_blank" class="text-sm font-semibold text-slate-500 hover:text-amber-600 transition-colors uppercase tracking-widest">
+                Comunidad
+            </a>
+        </div>
     </nav>
 
     <header class="text-center px-6 pt-12 pb-16 max-w-4xl mx-auto fade-in-up">
@@ -107,7 +176,61 @@
         <div class="w-24 h-1 bg-amber-400 mx-auto rounded-full"></div>
     </header>
 
-    <main class="flex-grow px-6 pb-20">
+    <section class="px-6 py-16 max-w-6xl mx-auto fade-in-up delay-100">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4 font-serif">
+                Terapia Ultra-Breve Estratégica
+            </h2>
+            <p class="text-slate-500 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+                Una metodología clínica de alta eficiencia estructurada en <strong>5 fases de impacto</strong>. Diseñada con rigor científico para cuantificar tu malestar, brindarte herramientas reales y fomentar tu absoluta independencia emocional.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-100 via-amber-300 to-amber-100 -translate-y-1/2 z-0"></div>
+
+            <div class="test-card rounded-3xl p-8 relative z-10 text-center flex flex-col h-full bg-white/90">
+                <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-black text-xl mx-auto mb-6 shadow-sm border-2 border-white">1</div>
+                <h3 class="text-lg font-bold text-slate-800 mb-3 font-serif">Sesión 1: Inmersión y Alianza</h3>
+                <p class="text-slate-500 text-sm leading-relaxed flex-grow">
+                    Análisis fenomenológico del motivo de consulta. Exploramos a profundidad la estructura de su situación actual para trazar la ruta clínica precisa.
+                </p>
+            </div>
+
+            <div class="test-card rounded-3xl p-8 relative z-10 text-center flex flex-col h-full bg-white/90">
+                <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-black text-xl mx-auto mb-6 shadow-sm border-2 border-white">2-3</div>
+                <h3 class="text-lg font-bold text-slate-800 mb-3 font-serif">Psicometría y Estrategia</h3>
+                <p class="text-slate-500 text-sm leading-relaxed flex-grow">
+                    Aplicación de pruebas científicas para cuantificar el malestar. Iniciamos la intervención dotando al paciente de marcos de trabajo operativos.
+                </p>
+            </div>
+
+            <div class="test-card rounded-3xl p-8 relative z-10 text-center flex flex-col h-full bg-white/90">
+                <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-black text-xl mx-auto mb-6 shadow-sm border-2 border-white">4</div>
+                <h3 class="text-lg font-bold text-slate-800 mb-3 font-serif">Consolidación Estructural</h3>
+                <p class="text-slate-500 text-sm leading-relaxed flex-grow">
+                    Avanzamos en la desensibilización de síntomas. Ajustamos intervenciones y solidificamos los nuevos esquemas cognitivos y conductuales.
+                </p>
+            </div>
+
+            <div class="test-card rounded-3xl p-8 relative z-10 text-center flex flex-col h-full bg-white/90">
+                <div class="w-14 h-14 bg-amber-500 text-white rounded-full flex items-center justify-center font-black text-xl mx-auto mb-6 shadow-md border-2 border-white">5</div>
+                <h3 class="text-lg font-bold text-slate-800 mb-3 font-serif">Síntesis y Alta Clínica</h3>
+                <p class="text-slate-500 text-sm leading-relaxed flex-grow">
+                    Cierre del protocolo. Entrega formal de una <strong>Impresión Diagnóstica Clínica</strong> por escrito y plan de mantenimiento a largo plazo.
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-12 bg-slate-50/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-6 flex gap-4 items-start max-w-3xl mx-auto">
+            <svg class="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                <strong>Nota Clínica de Flexibilidad:</strong> La Terapia Ultra-Breve es un protocolo intensivo. Sin embargo, bajo un estricto criterio profesional, el tratamiento puede requerir sesiones adicionales si la complejidad del cuadro sintomático lo demanda.
+            </p>
+        </div>
+    </section>
+
+    <main class="px-6 pb-16">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-2xl font-bold text-slate-800 mb-10 text-center flex items-center justify-center gap-4">
                 <span class="w-12 h-px bg-slate-300"></span>
@@ -116,18 +239,15 @@
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
                 <article class="test-card rounded-3xl p-8 flex flex-col items-center text-center fade-in-up delay-100">
                     <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-blue-600 shadow-sm">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <h3 class="text-xl font-bold text-slate-800 mb-3">Perfil de Personalidad</h3>
                     <p class="text-slate-500 text-sm mb-8 leading-relaxed">
-                        Evaluación científica BFI-10 para identificar sus fortalezas de carácter, rasgos dominantes y áreas de oportunidad.
+                        Evaluación científica BFI-10 para identificar fortalezas de carácter, rasgos dominantes y áreas de oportunidad.
                     </p>
-                    <a href="bfi10.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">
-                        Iniciar Prueba
-                    </a>
+                    <a href="bfi10.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">Iniciar Prueba</a>
                 </article>
 
                 <article class="test-card rounded-3xl p-8 flex flex-col items-center text-center fade-in-up delay-200">
@@ -138,9 +258,7 @@
                     <p class="text-slate-500 text-sm mb-8 leading-relaxed">
                         Instrumento RSES para medir su percepción de autovalía y satisfacción personal en el momento presente.
                     </p>
-                    <a href="rosenberg.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">
-                        Iniciar Prueba
-                    </a>
+                    <a href="rosenberg.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">Iniciar Prueba</a>
                 </article>
 
                 <article class="test-card rounded-3xl p-8 flex flex-col items-center text-center fade-in-up delay-300">
@@ -149,16 +267,57 @@
                     </div>
                     <h3 class="text-xl font-bold text-slate-800 mb-3">Inventario Clínico</h3>
                     <p class="text-slate-500 text-sm mb-8 leading-relaxed">
-                        Prueba OCI-R para el análisis detallado de sintomatología ansiosa y patrones de comportamiento específicos.
+                        Prueba OCI-R para el análisis detallado de sintomatología ansiosa y patrones de comportamiento.
                     </p>
-                    <a href="ocir.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">
-                        Iniciar Prueba
-                    </a>
+                    <a href="ocir.html" class="btn-start w-full text-white font-bold py-4 rounded-xl shadow-lg mt-auto text-sm uppercase tracking-wider">Iniciar Prueba</a>
                 </article>
-
             </div>
         </div>
     </main>
+
+    <section id="contacto" class="px-6 py-16 flex-grow">
+        <div class="max-w-4xl mx-auto contact-card rounded-[2.5rem] p-8 md:p-12 shadow-xl">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4 font-serif">Da el primer paso hoy</h2>
+                <p class="text-slate-500 text-sm md:text-base">
+                    La confidencialidad y el respeto son la base de nuestro trabajo. Completa el formulario o contáctame directamente por WhatsApp para agendar tu primera sesión de inmersión.
+                </p>
+            </div>
+
+            <form action="https://formsubmit.co/psicologofabiotorres@gmail.com" method="POST" class="space-y-6">
+                <input type="hidden" name="_subject" value="Nuevo paciente desde la Web: Solicitud de Cita">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://ft1977.github.io/psicologo/">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nombre" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Nombre Completo</label>
+                        <input type="text" id="nombre" name="Nombre" required class="w-full p-4 bg-white/50 border border-slate-200 rounded-xl focus:border-amber-500 focus:bg-white transition-all outline-none text-slate-700">
+                    </div>
+                    <div>
+                        <label for="telefono" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Teléfono / WhatsApp</label>
+                        <input type="tel" id="telefono" name="Telefono" required class="w-full p-4 bg-white/50 border border-slate-200 rounded-xl focus:border-amber-500 focus:bg-white transition-all outline-none text-slate-700">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="correo" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Correo Electrónico</label>
+                    <input type="email" id="correo" name="Correo" required class="w-full p-4 bg-white/50 border border-slate-200 rounded-xl focus:border-amber-500 focus:bg-white transition-all outline-none text-slate-700">
+                </div>
+
+                <div>
+                    <label for="mensaje" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Motivo de Consulta (Breve)</label>
+                    <textarea id="mensaje" name="Mensaje" rows="3" required class="w-full p-4 bg-white/50 border border-slate-200 rounded-xl focus:border-amber-500 focus:bg-white transition-all outline-none text-slate-700 resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full btn-start text-white font-bold py-5 rounded-xl shadow-lg text-sm uppercase tracking-widest mt-4">
+                    Enviar Mensaje Seguro
+                </button>
+                <p class="text-center text-[10px] text-slate-400 mt-4 uppercase tracking-widest">Tus datos están protegidos bajo secreto profesional.</p>
+            </form>
+        </div>
+    </section>
 
     <footer class="text-center py-8 text-slate-400 text-xs uppercase tracking-widest fade-in-up delay-300">
         <p>© 2026 Espiritualidad y Vida • Psicología Clínica Integral</p>
