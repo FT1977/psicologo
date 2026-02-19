@@ -27,44 +27,21 @@
             color: #1e293b;
         }
 
-        /* Fondo Dinámico Profesional */
         .dynamic-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.05) 0%, transparent 40%);
             animation: pulseBg 15s ease-in-out infinite alternate;
         }
 
         @keyframes pulseBg {
-            0% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
 
-        /* Contenedor Responsivo "Framed" */
         .app-container {
-            width: 100%;
-            max-width: 480px;
-            padding: 1.5rem;
-            margin: auto;
-            position: relative;
-        }
-
-        @media (min-width: 768px) {
-            .app-container {
-                max-width: 520px;
-            }
+            width: 100%; max-width: 520px; padding: 1.5rem; margin: auto; position: relative; z-index: 10;
         }
 
         .premium-card {
@@ -75,413 +52,220 @@
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Animaciones de Entrada */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .fade-out { animation: fadeOut 0.3s ease-in forwards; }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.98);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
-
-        .fade-out {
-            animation: fadeOut 0.3s ease-in forwards;
-        }
-
         @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            to {
-                opacity: 0;
-                transform: scale(0.95);
-            }
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
         }
 
-        /* Estilo de Botones de Opción - Microinteracción */
-        .btn-option {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-option:active {
-            transform: scale(0.97);
-        }
-
-        .btn-option:hover:not(.active) {
-            background-color: #f1f5f9;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
+        .btn-option { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .btn-option:active { transform: scale(0.97); }
+        .btn-option:hover:not(.active) { background-color: #f1f5f9; border-color: var(--primary); transform: translateY(-2px); }
         .btn-option.active {
-            background-color: var(--primary) !important;
-            color: white !important;
-            border-color: var(--primary);
+            background-color: var(--primary) !important; color: white !important; border-color: var(--primary);
             box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
         }
+        .btn-option.active span:last-child { background-color: white !important; color: var(--primary) !important; }
 
-        /* Barra de Progreso con Brillo */
-        .progress-glow {
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
-        }
-
-        /* Scrollbar Personalizada */
-        .hide-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .hide-scroll {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Ajustes Mobile First */
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
+        .progress-glow { box-shadow: 0 0 15px rgba(37, 99, 235, 0.4); }
+        .hide-scroll::-webkit-scrollbar { display: none; }
     </style>
 </head>
 
 <body>
+    <a href="index.html" class="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex items-center gap-2 text-[10px] md:text-xs font-bold text-slate-500 hover:text-blue-600 transition-all uppercase tracking-widest bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-slate-200/50 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+        <span class="hidden sm:inline">Volver al inicio</span>
+        <span class="sm:hidden">Inicio</span>
+    </a>
+
     <div class="dynamic-bg"></div>
 
     <main class="app-container">
-        <!-- Pantalla de Bienvenida -->
         <div id="welcome-screen" class="premium-card rounded-[2.5rem] p-10 text-center fade-in">
             <div class="mb-8">
-                <div
-                    class="w-20 h-20 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl rotate-3 transform hover:rotate-0 transition-transform duration-500">
+                <div class="w-20 h-20 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl rotate-3 transform hover:rotate-0 transition-transform duration-500">
                     <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
                 <h1 class="text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">Evaluación OCI-R</h1>
                 <p class="text-blue-600 font-bold tracking-widest uppercase text-[10px]">Psicólogo Fabio Torres</p>
             </div>
 
-            <div class="text-left space-y-4 mb-10">
-                <p class="text-slate-500 text-base leading-relaxed">
-                    Estimado paciente, esta herramienta clínica permite identificar patrones de comportamiento
-                    para guiar su proceso de atención.
-                </p>
-            </div>
+            <p class="text-slate-500 text-base leading-relaxed mb-10 text-left">
+                Estimado paciente, esta herramienta clínica permite identificar patrones de comportamiento y pensamientos para guiar su proceso de atención.
+            </p>
 
             <div class="space-y-4 mb-10">
-                <div class="relative group">
-                    <input type="text" id="patient-name" placeholder="Tu nombre completo"
-                        class="w-full p-5 bg-white border-2 border-slate-100 rounded-2xl focus:border-blue-500 transition-all outline-none text-slate-700 font-semibold shadow-sm group-hover:shadow-md">
-                </div>
-
+                <input type="text" id="patient-name" placeholder="Tu nombre completo" class="w-full p-5 bg-white border-2 border-slate-100 rounded-2xl focus:border-blue-500 transition-all outline-none text-slate-700 font-semibold shadow-sm">
+                
                 <div class="grid grid-cols-2 gap-4">
-                    <input type="number" id="patient-age" placeholder="Edad"
-                        class="w-full p-5 bg-white border-2 border-slate-100 rounded-2xl focus:border-blue-500 transition-all outline-none text-slate-700 font-semibold shadow-sm">
-
-                    <div class="relative">
-                        <select id="patient-job"
-                            class="w-full p-5 bg-white border-2 border-slate-100 rounded-2xl focus:border-blue-500 transition-all outline-none text-slate-700 font-semibold shadow-sm">
-                            <option value="" disabled selected>Ocupación</option>
-                            <option value="Estudiante">Estudiante</option>
-                            <option value="Empleado">Empleado</option>
-                            <option value="Independiente">Independiente</option>
-                            <option value="Hogar">Hogar</option>
-                            <option value="Jubilado">Jubilado</option>
-                            <option value="Desempleado">Desempleado</option>
-                            <option value="Otros">Otros</option>
-                        </select>
-                        <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-300">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z">
-                                </path>
-                            </svg>
-                        </div>
-                    </div>
+                    <input type="number" id="patient-age" placeholder="Edad" class="w-full p-5 bg-white border-2 border-slate-100 rounded-2xl focus:border-blue-500 transition-all outline-none text-slate-700 font-semibold shadow-sm">
+                    <select id="patient-job" class="w-full p-5 bg-white border-2 border-slate-100 rounded-2xl focus:border-blue-500 transition-all outline-none text-slate-700 font-semibold shadow-sm appearance-none">
+                        <option value="" disabled selected>Ocupación</option>
+                        <option value="Estudiante">Estudiante</option>
+                        <option value="Empleado">Empleado</option>
+                        <option value="Independiente">Independiente</option>
+                        <option value="Hogar">Hogar</option>
+                        <option value="Otro">Otro</option>
+                    </select>
                 </div>
             </div>
 
-            <button onclick="goToInstructions()"
-                class="w-full bg-slate-900 hover:bg-blue-600 text-white font-extrabold py-5 px-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95 text-lg">
+            <button onclick="goToInstructions()" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-extrabold py-5 px-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95 text-lg">
                 Continuar
             </button>
-
-            <button onclick="openPortal()"
-                class="mt-10 text-slate-300 hover:text-blue-500 text-[10px] font-black tracking-[0.2em] uppercase transition-colors">
+            <button onclick="openPortal()" class="mt-10 text-slate-300 hover:text-blue-500 text-[10px] font-black tracking-[0.2em] uppercase transition-colors">
                 Panel Profesional
             </button>
         </div>
 
-        <!-- Pantalla de Instrucciones Clínicas -->
         <div id="instruction-screen" class="premium-card rounded-[2.5rem] p-10 text-center hidden">
             <div class="w-20 h-1 bg-blue-600 mx-auto mb-10 rounded-full opacity-20"></div>
             <h2 class="text-3xl font-extrabold text-slate-900 mb-8">Compromiso Ético</h2>
-
             <div class="text-left space-y-6 mb-12 text-slate-600 leading-relaxed text-base">
-                <p>Para la obtención de resultados con **validez clínica**, es imperativo que sus respuestas se basen en
-                    una reflexión introspectiva genuina.</p>
-                <p>Le instamos a considerar cada ítem de forma aislada, priorizando la veracidad sobre cualquier otro
-                    criterio. Su honestidad es el cimiento de nuestra intervención.</p>
+                <p>Para la obtención de resultados con validez clínica, es imperativo que sus respuestas se basen en una reflexión introspectiva genuina.</p>
+                <p>Le instamos a considerar cada ítem de forma aislada, priorizando la veracidad. Su honestidad es el cimiento de nuestra intervención.</p>
             </div>
-
-            <button onclick="goToExplanation()"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-5 px-6 rounded-2xl transition-all shadow-2xl shadow-blue-100 transform hover:-translate-y-1 active:scale-95">
+            <button onclick="goToExplanation()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-5 px-6 rounded-2xl transition-all shadow-2xl shadow-blue-100 transform hover:-translate-y-1 active:scale-95">
                 Acepto, continuar
             </button>
-
-            <button onclick="goBackToWelcome()"
-                class="mt-8 text-slate-400 text-xs font-bold hover:text-slate-600 transition-colors flex items-center justify-center gap-2 mx-auto">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Corregir mis datos
+            <button onclick="goBackToWelcome()" class="mt-8 text-slate-400 text-xs font-bold hover:text-slate-600 transition-colors flex items-center justify-center gap-2 mx-auto">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> Corregir mis datos
             </button>
         </div>
 
-        <!-- Pantalla de Explicación de la Prueba -->
         <div id="explanation-screen" class="premium-card rounded-[2.5rem] p-10 text-center hidden">
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-6">Sobre la evaluación</h2>
-
-            <div class="text-left space-y-6 mb-10 text-slate-600 leading-relaxed text-sm">
-                <p>Usted realizará el **OCI-R**, un inventario clínico diseñado para evaluar el nivel de malestar
-                    asociado a ciertos pensamientos y comportamientos durante el **último mes**.</p>
-
-                <div class="bg-blue-50/50 p-6 rounded-2xl border border-blue-100 italic">
-                    "Por favor, seleccione la opción que mejor indique cuánto le ha molestado o angustiado cada
-                    experiencia recientemente."
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6">Instrucciones</h2>
+            <div class="text-left space-y-4 mb-10 text-slate-600 text-sm">
+                <p>Usted evaluará el nivel de malestar asociado a ciertos pensamientos y comportamientos durante el <strong>último mes</strong>.</p>
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 italic text-blue-900 font-semibold mb-4">
+                    ¿Cuánto le ha molestado o angustiado cada experiencia recientemente?
                 </div>
-
-                <div class="space-y-3">
-                    <p class="font-bold text-slate-800">Significado de las opciones:</p>
-                    <ul class="space-y-2">
-                        <li class="flex gap-3 items-center"><span
-                                class="w-6 h-6 bg-slate-100 rounded-lg flex-shrink-0 flex items-center justify-center font-bold text-slate-400 text-[10px]">0</span>
-                            <span class="text-xs">**Nada**: No ha ocurrido o no me ha molestado.</span></li>
-                        <li class="flex gap-3 items-center"><span
-                                class="w-6 h-6 bg-slate-100 rounded-lg flex-shrink-0 flex items-center justify-center font-bold text-slate-400 text-[10px]">1</span>
-                            <span class="text-xs">**Un poco**: Me ha molestado de forma leve o poco frecuente.</span>
-                        </li>
-                        <li class="flex gap-3 items-center"><span
-                                class="w-6 h-6 bg-slate-100 rounded-lg flex-shrink-0 flex items-center justify-center font-bold text-slate-400 text-[10px]">2</span>
-                            <span class="text-xs">**Moderadamente**: Me ha molestado de forma ocasional y clara.</span>
-                        </li>
-                        <li class="flex gap-3 items-center"><span
-                                class="w-6 h-6 bg-slate-100 rounded-lg flex-shrink-0 flex items-center justify-center font-bold text-slate-400 text-[10px]">3</span>
-                            <span class="text-xs">**Mucho**: Me ha molestado frecuentemente y con intensidad.</span>
-                        </li>
-                        <li class="flex gap-3 items-center"><span
-                                class="w-6 h-6 bg-slate-100 rounded-lg flex-shrink-0 flex items-center justify-center font-bold text-slate-400 text-[10px]">4</span>
-                            <span class="text-xs">**Muchísimo**: Me ha molestado casi siempre o de forma extrema.</span>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="space-y-3">
+                    <li class="flex gap-3 items-center"><span class="w-6 h-6 bg-slate-100 rounded-lg flex items-center justify-center font-bold text-slate-400 text-[10px]">0</span> <span class="text-xs"><strong>Nada</strong>: No ha ocurrido/molestado.</span></li>
+                    <li class="flex gap-3 items-center"><span class="w-6 h-6 bg-slate-100 rounded-lg flex items-center justify-center font-bold text-slate-400 text-[10px]">1</span> <span class="text-xs"><strong>Un poco</strong>: Leve o poco frecuente.</span></li>
+                    <li class="flex gap-3 items-center"><span class="w-6 h-6 bg-slate-100 rounded-lg flex items-center justify-center font-bold text-slate-400 text-[10px]">2</span> <span class="text-xs"><strong>Moderadamente</strong>: Ocasional y claro.</span></li>
+                    <li class="flex gap-3 items-center"><span class="w-6 h-6 bg-slate-100 rounded-lg flex items-center justify-center font-bold text-slate-400 text-[10px]">3</span> <span class="text-xs"><strong>Mucho</strong>: Frecuente e intenso.</span></li>
+                    <li class="flex gap-3 items-center"><span class="w-6 h-6 bg-slate-100 rounded-lg flex items-center justify-center font-bold text-slate-400 text-[10px]">4</span> <span class="text-xs"><strong>Muchísimo</strong>: Casi siempre o extremo.</span></li>
+                </ul>
             </div>
-
-            <button onclick="startAssessment()"
-                class="w-full bg-slate-900 hover:bg-blue-600 text-white font-extrabold py-5 px-6 rounded-2xl transition-all shadow-xl transform hover:-translate-y-1 active:scale-95">
+            <button onclick="startAssessment()" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-extrabold py-5 px-6 rounded-2xl transition-all shadow-xl transform hover:-translate-y-1 active:scale-95">
                 Empezar evaluación
             </button>
-
-            <button onclick="goBackToInstructions()"
-                class="mt-8 text-slate-400 text-xs font-bold hover:text-slate-600 transition-colors flex items-center justify-center gap-2 mx-auto">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-                Ver compromiso ético
-            </button>
         </div>
 
-        <!-- Pantalla de Preguntas -->
         <div id="question-screen" class="premium-card rounded-[2.5rem] p-8 hidden">
             <div class="mb-10">
                 <div class="flex justify-between items-center mb-6">
-                    <button onclick="previousQuestion()" id="back-btn"
-                        class="text-slate-400 hover:text-blue-600 transition-colors flex items-center gap-2 invisible group">
-                        <div
-                            class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 19l-7-7 7-7"></path>
-                            </svg>
+                    <button onclick="previousQuestion()" id="back-btn" class="text-slate-400 hover:text-blue-600 transition-colors flex items-center gap-2 invisible group">
+                        <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         </div>
                         <span class="text-[10px] font-black uppercase tracking-widest">Volver</span>
                     </button>
+                    
                     <div class="text-right">
-                        <span id="progress-text"
-                            class="block text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-1">Pregunta
-                            1 de 18</span>
+                        <span id="progress-text" class="block text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-1">Pregunta 1 de 18</span>
                         <span id="percentage-text" class="text-sm font-bold text-slate-300">5%</span>
                     </div>
                 </div>
                 <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                    <div id="progress-bar"
-                        class="bg-blue-600 h-full rounded-full transition-all duration-700 progress-glow"
-                        style="width: 5%"></div>
+                    <div id="progress-bar" class="bg-blue-600 h-full rounded-full transition-all duration-700 progress-glow" style="width: 5%"></div>
                 </div>
             </div>
 
-            <h2 id="question-text"
-                class="text-2xl md:text-3xl font-bold text-slate-800 leading-tight mb-12 min-h-[7rem] flex items-center">
-                <!-- La pregunta se insertará aquí -->
-            </h2>
+            <h2 id="question-text" class="text-2xl md:text-3xl font-bold text-slate-800 leading-tight mb-12 min-h-[7rem] flex items-center"></h2>
 
-            <div id="options-container" class="space-y-3">
-                <button onclick="recordAnswer(0, this)"
-                    class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
+            <div class="space-y-3">
+                <button onclick="recordAnswer(0, this)" id="btn-val-0" class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
                     <span class="font-bold text-slate-600 group-hover:text-blue-600 transition-colors">Nada</span>
-                    <span
-                        class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">0</span>
+                    <span class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">0</span>
                 </button>
-                <button onclick="recordAnswer(1, this)"
-                    class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
-                    <span class="font-bold text-slate-600 group-hover:text-blue-600 transition-colors">Un
-                        poco</span>
-                    <span
-                        class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">1</span>
+                <button onclick="recordAnswer(1, this)" id="btn-val-1" class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
+                    <span class="font-bold text-slate-600 group-hover:text-blue-600 transition-colors">Un poco</span>
+                    <span class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">1</span>
                 </button>
-                <button onclick="recordAnswer(2, this)"
-                    class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
-                    <span
-                        class="font-bold text-slate-600 group-hover:text-blue-600 transition-colors">Moderadamente</span>
-                    <span
-                        class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">2</span>
+                <button onclick="recordAnswer(2, this)" id="btn-val-2" class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
+                    <span class="font-bold text-slate-600 group-hover:text-blue-600 transition-colors">Moderadamente</span>
+                    <span class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">2</span>
                 </button>
-                <button onclick="recordAnswer(3, this)"
-                    class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
+                <button onclick="recordAnswer(3, this)" id="btn-val-3" class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
                     <span class="font-bold text-slate-600 group-hover:text-blue-600 transition-colors">Mucho</span>
-                    <span
-                        class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">3</span>
+                    <span class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">3</span>
                 </button>
-                <button onclick="recordAnswer(4, this)"
-                    class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
+                <button onclick="recordAnswer(4, this)" id="btn-val-4" class="btn-option w-full text-left bg-white border-2 border-slate-50 p-5 rounded-2xl flex items-center justify-between group shadow-sm">
                     <span class="font-bold text-slate-600 group-hover:text-blue-600 transition-colors">Muchísimo</span>
-                    <span
-                        class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">4</span>
+                    <span class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">4</span>
                 </button>
             </div>
         </div>
 
-        <!-- Pantalla de Envío -->
         <div id="finish-screen" class="premium-card rounded-[2.5rem] p-10 text-center hidden">
             <div id="upload-status">
                 <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8">
-                    <svg class="w-10 h-10 text-blue-600 animate-pulse" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
-                        </path>
-                    </svg>
+                    <svg class="w-10 h-10 text-blue-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                 </div>
                 <h2 class="text-2xl font-extrabold text-slate-900 mb-4">Analizando Resultados</h2>
                 <div class="w-full bg-slate-100 h-1.5 rounded-full max-w-[200px] mx-auto overflow-hidden">
                     <div class="bg-blue-600 h-full w-1/3 animate-[loading_2s_infinite]"></div>
                 </div>
-                <style>
-                    @keyframes loading {
-                        0% {
-                            transform: translateX(-100%);
-                        }
-
-                        100% {
-                            transform: translateX(300%);
-                        }
-                    }
-                </style>
+                <style>@keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }</style>
             </div>
 
             <div id="final-actions" class="hidden fade-in">
                 <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-8">
-                    <svg class="w-12 h-12 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
+                    <svg class="w-12 h-12 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
                 <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Evaluación Terminada</h2>
                 <p class="text-slate-500 text-base mb-10 leading-relaxed px-4">
-                    Sus respuestas han sido procesadas y guardadas de forma segura. <br><br>
-                    Para concluir, por favor haga clic en el botón de abajo. Esto me enviará una notificación automática
-                    a mi WhatsApp.
+                    Sus respuestas y métricas de tiempo han sido procesadas de forma segura.<br><br>Para concluir, haga clic en el botón de abajo y envíe la notificación.
                 </p>
-                <button onclick="notifyWhatsApp()"
-                    class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-5 px-6 rounded-2xl shadow-xl shadow-emerald-100 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 448 512">
-                        <path
-                            d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.7 68.9 27.1 106.1 27.1h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.3-16.3-14.6-27.4-32.6-30.6-38.1-3.2-5.6-.3-8.6 2.5-11.4 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
-                    </svg>
-                    Notificar por WhatsApp
+                <button onclick="notifyWhatsApp()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-5 px-6 rounded-2xl shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.7 68.9 27.1 106.1 27.1h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.1 0-65.6-8.9-93.9-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.3-16.3-14.6-27.4-32.6-30.6-38.1-3.2-5.6-.3-8.6 2.5-11.4 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.7 23.5 9.2 31.6 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg> Notificar por WhatsApp
                 </button>
             </div>
         </div>
 
-        <!-- Portal del Psicólogo -->
         <div id="psychologist-portal" class="premium-card rounded-[2.5rem] p-10 hidden fade-in">
             <div class="flex items-center gap-6 mb-10 border-b border-slate-100 pb-8">
                 <div class="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center shadow-xl">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                        </path>
-                    </svg>
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-extrabold text-slate-900">Portal Clínico</h2>
+                    <h2 class="text-2xl font-extrabold text-slate-900">Portal Clínico OCI-R</h2>
                     <p class="text-[10px] text-blue-600 font-black uppercase tracking-[0.3em]">Acceso Restringido</p>
                 </div>
             </div>
 
             <div id="auth-section">
-                <input type="password" id="admin-pass" placeholder="Código de acceso"
-                    class="w-full p-6 bg-slate-50 border-2 border-slate-50 focus:border-slate-900 focus:bg-white rounded-2xl mb-6 transition-all outline-none font-bold text-center tracking-widest">
-                <button onclick="unlockPortal()"
-                    class="w-full bg-slate-900 text-white font-extrabold py-5 rounded-2xl shadow-2xl transition-all transform active:scale-95">Ingresar
-                    al Sistema</button>
+                <input type="password" id="admin-pass" placeholder="Código de acceso" class="w-full p-6 bg-slate-50 border-2 border-slate-50 focus:border-slate-900 focus:bg-white rounded-2xl mb-6 transition-all outline-none font-bold text-center tracking-widest">
+                <button onclick="unlockPortal()" class="w-full bg-slate-900 text-white font-extrabold py-5 rounded-2xl shadow-2xl transition-all transform active:scale-95">Ingresar al Sistema</button>
             </div>
 
             <div id="results-viewer" class="hidden space-y-8 fade-in">
-                <div
-                    class="bg-blue-50/50 p-5 rounded-2xl text-blue-900 text-xs font-semibold leading-relaxed border border-blue-100">
-                    Sincronización manual: Pegue el código cifrado para reconstruir el historial clínico de la sesión.
-                </div>
-                <textarea id="data-input" rows="2" placeholder="Pegue el código de respaldo aquí..."
-                    class="w-full p-5 bg-slate-50 border-2 border-slate-50 rounded-2xl text-xs font-mono resize-none focus:border-blue-500 outline-none"></textarea>
-                <button onclick="processData()"
-                    class="w-full bg-blue-600 text-white font-extrabold py-5 rounded-2xl shadow-xl shadow-blue-100">Reconstruir
-                    Informe</button>
-
-                <div id="report-output"
-                    class="bg-white p-8 rounded-[2rem] border-2 border-slate-50 text-sm max-h-[450px] overflow-y-auto hide-scroll hidden shadow-inner">
-                    <!-- El reporte aparecerá aquí -->
-                </div>
-
-                <div class="flex gap-4">
-                    <button id="download-btn" onclick="downloadReport()"
-                        class="flex-1 bg-slate-900 text-white font-black py-4 rounded-xl hover:bg-slate-800 transition-colors hidden text-[10px] uppercase tracking-widest">Descargar
-                        Informe</button>
-                    <button onclick="closePortal()"
-                        class="flex-none bg-slate-100 text-slate-400 font-black px-6 py-4 rounded-xl hover:text-slate-600 transition-colors uppercase text-[10px]">Salir</button>
-                </div>
+                <textarea id="data-input" rows="2" placeholder="Pegue el código de respaldo aquí..." class="w-full p-5 bg-slate-50 border-2 border-slate-50 rounded-2xl text-xs font-mono resize-none focus:border-blue-500 outline-none"></textarea>
+                <button onclick="processData()" class="w-full bg-blue-600 text-white font-extrabold py-5 rounded-2xl shadow-xl shadow-blue-100">Reconstruir Informe</button>
+                <div id="report-output" class="bg-white p-8 rounded-[2rem] border-2 border-slate-50 text-sm max-h-[450px] overflow-y-auto hide-scroll hidden shadow-inner"></div>
+                <button onclick="closePortal()" class="w-full bg-slate-100 text-slate-400 font-black px-6 py-4 rounded-xl hover:text-slate-600 transition-colors uppercase text-[10px]">Cerrar Sesión</button>
             </div>
         </div>
     </main>
 
     <script>
-        /* --- CONFIGURACIÓN PARA EL PSICÓLOGO --- */
+        /* --- CONFIGURACIÓN --- */
         const PSICOLOGO_EMAIL = "psicologofabiotorres@gmail.com";
         const WHATSAPP_NUMBER = "573216284300";
-        /* --------------------------------------- */
+        /* --------------------- */
 
         const questions = [
             "He guardado tantas cosas que se me hace difícil organizar mi espacio.",
@@ -504,12 +288,13 @@
             "Me aseguro de que las cosas estén en orden simétrico o equilibrado."
         ];
 
-        let currentQuestionIndex = 0;
-        let answers = [];
-        let patientName = "";
-        let patientAge = "";
-        let patientJob = "";
+        let currentQ = 0;
+        let answers = []; 
+        let patient = { name: "", age: "", job: "" };
         let generatedCode = "";
+        
+        // Timer
+        let testStartTime = null;
 
         const screens = {
             welcome: document.getElementById('welcome-screen'),
@@ -521,12 +306,12 @@
         };
 
         function goToInstructions() {
-            patientName = document.getElementById('patient-name').value.trim();
-            patientAge = document.getElementById('patient-age').value.trim();
-            patientJob = document.getElementById('patient-job').value;
+            patient.name = document.getElementById('patient-name').value.trim();
+            patient.age = document.getElementById('patient-age').value.trim();
+            patient.job = document.getElementById('patient-job').value;
 
-            if (!patientName || !patientAge || !patientJob) {
-                alert("Por favor, completa todos los campos (Nombre, Edad y Ocupación).");
+            if (!patient.name || !patient.age || !patient.job) {
+                alert("Por favor, completa todos los campos.");
                 return;
             }
             screens.welcome.classList.add('hidden');
@@ -546,13 +331,8 @@
             screens.explanation.classList.add('fade-in');
         }
 
-        function goBackToInstructions() {
-            screens.explanation.classList.add('hidden');
-            screens.instruction.classList.remove('hidden');
-            screens.instruction.classList.add('fade-in');
-        }
-
         function startAssessment() {
+            testStartTime = new Date();
             screens.explanation.classList.add('hidden');
             screens.question.classList.remove('hidden');
             screens.question.classList.add('fade-in');
@@ -560,96 +340,133 @@
         }
 
         function showQuestion() {
-            document.getElementById('question-text').textContent = questions[currentQuestionIndex];
-            document.getElementById('progress-text').textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
-            const percent = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
+            document.getElementById('question-text').textContent = questions[currentQ];
+            document.getElementById('progress-text').textContent = `Pregunta ${currentQ + 1} de ${questions.length}`;
+            const percent = Math.round(((currentQ + 1) / questions.length) * 100);
             document.getElementById('percentage-text').textContent = `${percent}%`;
             document.getElementById('progress-bar').style.width = `${percent}%`;
 
-            // Gestionar visibilidad del botón de volver
+            // Control de Botón Volver
             const backBtn = document.getElementById('back-btn');
-            if (currentQuestionIndex > 0) {
+            if (currentQ > 0) {
                 backBtn.classList.remove('invisible');
             } else {
                 backBtn.classList.add('invisible');
             }
 
-            // Forzar limpieza de foco y selección
+            // Restaurar selección de memoria
+            document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
+            if(answers[currentQ] !== undefined) {
+                document.getElementById(`btn-val-${answers[currentQ].v}`).classList.add('active');
+            }
+
             window.scrollTo(0, 0);
-            document.activeElement?.blur();
+        }
+
+        function previousQuestion() {
+            if (currentQ > 0) {
+                currentQ--;
+                screens.question.classList.add('fade-out');
+                setTimeout(() => {
+                    showQuestion();
+                    screens.question.classList.remove('fade-out');
+                    screens.question.classList.add('fade-in');
+                    setTimeout(() => screens.question.classList.remove('fade-in'), 500);
+                }, 250);
+            }
         }
 
         function recordAnswer(value, btn) {
-            // Visual feedback immediate
             document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             setTimeout(() => {
-                answers[currentQuestionIndex] = { q: questions[currentQuestionIndex], v: value };
-                currentQuestionIndex++;
+                answers[currentQ] = { q: questions[currentQ], v: value };
+                currentQ++;
 
-                if (currentQuestionIndex < questions.length) {
+                if (currentQ < questions.length) {
                     screens.question.classList.add('fade-out');
                     setTimeout(() => {
                         showQuestion();
-                        document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
                         screens.question.classList.remove('fade-out');
                         screens.question.classList.add('fade-in');
-                        // Limpiar animación después de terminar
-                        setTimeout(() => screens.question.classList.remove('fade-in'), 600);
-                    }, 300);
+                        setTimeout(() => screens.question.classList.remove('fade-in'), 500);
+                    }, 250);
                 } else {
                     finalizeAndSend();
                 }
             }, 200);
         }
 
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                screens.question.classList.add('fade-out');
-                setTimeout(() => {
-                    showQuestion();
-                    document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
-                    screens.question.classList.remove('fade-out');
-                    screens.question.classList.add('fade-in');
-                    setTimeout(() => screens.question.classList.remove('fade-in'), 600);
-                }, 300);
-            }
-        }
-
         async function finalizeAndSend() {
+            // Calcular Tiempo
+            const endTime = new Date();
+            const timeDiffSecs = Math.floor((endTime - testStartTime) / 1000);
+            const minutes = Math.floor(timeDiffSecs / 60);
+            const seconds = timeDiffSecs % 60;
+            const timeString = `${minutes} min y ${seconds} seg`;
+
             screens.question.classList.add('hidden');
             screens.finish.classList.remove('hidden');
             screens.finish.classList.add('fade-in');
 
             const totalScore = answers.reduce((acc, curr) => acc + curr.v, 0);
+            
+            // Análisis Clínico: Extraer síntomas Diana (Malestar de 3 o 4)
+            let highestSymptoms = answers.filter(a => a.v >= 3).map(a => `- [Intensidad ${a.v}/4]: ${a.q}`);
+            let clinicalAnalysis = "";
+            let diagnosisStr = "";
+
+            if (totalScore >= 21) {
+                diagnosisStr = "Puntaje INDICATIVO de TOC";
+                clinicalAnalysis = "ALERTA CLÍNICA: El puntaje total sugiere la presencia significativa de sintomatología obsesivo-compulsiva. El paciente experimenta niveles de angustia que interfieren con su funcionalidad. Se recomienda iniciar evaluación diagnóstica diferencial y estructurar un plan de Exposición y Prevención de Respuesta (EPR) focalizado en los síntomas diana.";
+            } else {
+                diagnosisStr = "Puntaje Normal / Subclínico";
+                clinicalAnalysis = "MALESTAR SUBCLÍNICO O NULO: El paciente no reporta interferencia o angustia significativa asociada a sintomatología de tipo obsesivo-compulsiva en este momento. Continuar con exploración de otras áreas u objetivos de crecimiento personal.";
+            }
+
+            if(highestSymptoms.length > 0) {
+                clinicalAnalysis += "\n\nSÍNTOMAS DIANA (Compulsiones/Obsesiones con mayor malestar y posibles focos para EPR):\n" + highestSymptoms.join("\n");
+            } else {
+                clinicalAnalysis += "\n\nSÍNTOMAS DIANA: No se identificaron picos severos de malestar individual.";
+            }
+
             const rawData = {
-                paciente: patientName,
-                edad: patientAge,
-                ocupacion: patientJob,
+                paciente: patient.name,
+                edad: patient.age,
+                ocupacion: patient.job,
                 fecha: new Date().toLocaleString(),
+                time: timeString,
                 puntaje: totalScore,
+                diag: diagnosisStr,
                 respuestas: answers
             };
 
             generatedCode = btoa(JSON.stringify(rawData));
-            const diagnosis = totalScore >= 21 ? "Puntaje INDICATIVO de síntomas de TOC." : "Puntaje dentro de rangos normales.";
 
-            let reportText = `RESULTADOS PRUEBA OCI-R\n==============================\n`;
-            reportText += `Paciente: ${patientName}\nEdad: ${patientAge}\nOcupación: ${patientJob}\nFecha: ${rawData.fecha}\nPuntaje Final: ${totalScore}\nDiagnóstico: ${diagnosis}\n==============================\n\nDETALLE DE RESPUESTAS:\n`;
-            answers.forEach((a, i) => { reportText += `Pregunta ${i + 1}: (${a.v} pts) - ${a.q}\n`; });
+            let reportText = `
+                EVALUACIÓN CLÍNICA (OCI-R)
+                ===================================
+                PACIENTE: ${patient.name} (${patient.age} años)
+                OCUPACIÓN: ${patient.job}
+                FECHA: ${rawData.fecha}
+                TIEMPO DE RESOLUCIÓN: ${timeString}
+                
+                PUNTAJE GLOBAL: ${totalScore} / 72
+                ESTADO: ${diagnosisStr}
+                
+                -----------------------------------
+                ANÁLISIS DEL ESTRATEGA CLÍNICO:
+                ${clinicalAnalysis}
+                -----------------------------------
+            `;
 
             try {
                 const formData = new FormData();
-                formData.append("Paciente", patientName);
-                formData.append("Edad", patientAge);
-                formData.append("Ocupación", patientJob);
-                formData.append("Puntaje", totalScore);
-                formData.append("Diagnóstico", diagnosis);
-                formData.append("Informe", reportText);
-                formData.append("_subject", `Resultado OCI-R: ${patientName} (${patientAge} años)`);
+                formData.append("message", reportText); // Estandarizado a "message"
+                formData.append("_subject", `OCI-R: ${patient.name} - Puntaje: ${totalScore}`);
                 formData.append("_captcha", "false");
+                formData.append("email", PSICOLOGO_EMAIL);
 
                 await fetch(`https://formsubmit.co/ajax/${PSICOLOGO_EMAIL}`, {
                     method: "POST",
@@ -659,21 +476,17 @@
                 document.getElementById('upload-status').classList.add('hidden');
                 document.getElementById('final-actions').classList.remove('hidden');
             } catch (error) {
-                document.getElementById('upload-status').innerHTML = `
-                    <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6"><svg class="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg></div>
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Conexión inestable</h2>
-                    <p class="text-sm text-gray-500 mb-6">No pudimos guardar automáticamente, pero no te preocupes. Pulsa el botón de abajo para enviarme el reporte por WhatsApp.</p>
-                `;
+                document.getElementById('upload-status').classList.add('hidden');
                 document.getElementById('final-actions').classList.remove('hidden');
             }
         }
 
         function notifyWhatsApp() {
-            const message = `Hola Fabio, soy ${patientName} (${patientAge} años). Acabo de completar mi evaluación OCI-R.\n\nCódigo de respaldo:\n${generatedCode}`;
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.location.href = whatsappUrl;
+            const message = `Hola Fabio, soy ${patient.name}. Acabo de completar el OCI-R.\n\nCódigo:\n${generatedCode}`;
+            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
         }
 
+        /* --- PORTAL --- */
         function openPortal() {
             Object.values(screens).forEach(s => s.classList.add('hidden'));
             screens.portal.classList.remove('hidden');
@@ -692,43 +505,30 @@
             if (!code) return;
             try {
                 const data = JSON.parse(atob(code));
-                const diagnosis = data.puntaje >= 21 ? "Puntaje INDICATIVO de síntomas de TOC." : "Puntaje dentro de rangos normales.";
+                
+                let colorClass = data.puntaje >= 21 ? "text-red-600" : "text-blue-600";
+                
                 let html = `<div class="p-2 border-b-2 border-blue-100 mb-4 text-center">
                     <h3 class="font-bold text-xl text-blue-900">${data.paciente || 'Paciente'}</h3>
-                    <p class="text-[10px] text-blue-400 font-bold uppercase tracking-widest">${data.edad || '?'} años • ${data.ocupacion || 'Sin oficio'} • ${data.fecha}</p>
+                    <p class="text-[10px] text-blue-400 font-bold uppercase tracking-widest">${data.edad || '?'} años • ${data.ocupacion || 'Sin oficio'}<br>⏱️ ${data.time}</p>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="bg-white p-3 rounded-xl border-2 border-blue-50 text-center"><p class="text-[10px] uppercase font-bold text-gray-400">Puntaje</p><p class="text-2xl font-black text-blue-600">${data.puntaje}</p></div>
-                    <div class="bg-white p-3 rounded-xl border-2 border-blue-50 text-center"><p class="text-[10px] uppercase font-bold text-gray-400">Estado</p><p class="text-[10px] leading-tight font-bold text-gray-700 mt-1">${diagnosis}</p></div>
+                    <div class="bg-white p-3 rounded-xl border-2 border-blue-50 text-center"><p class="text-[10px] uppercase font-bold text-slate-400">Puntaje</p><p class="text-2xl font-black ${colorClass}">${data.puntaje}</p></div>
+                    <div class="bg-white p-3 rounded-xl border-2 border-blue-50 text-center flex flex-col justify-center"><p class="text-[10px] uppercase font-bold text-slate-400">Estado</p><p class="text-[10px] leading-tight font-bold text-slate-700 mt-1">${data.diag}</p></div>
                 </div>
-                <h4 class="font-bold text-gray-800 text-xs mb-3 uppercase tracking-wider">Desglose de respuestas:</h4><ul class="space-y-2">`;
+                <h4 class="font-bold text-slate-800 text-xs mb-3 uppercase tracking-wider">Desglose de respuestas:</h4><ul class="space-y-2">`;
+                
                 data.respuestas.forEach((a, i) => {
-                    html += `<li class="bg-white p-3 rounded-xl border border-gray-100 flex items-start gap-3"><span class="w-5 h-5 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-gray-400">${i + 1}</span><div><p class="text-[11px] leading-tight text-gray-600">${a.q}</p><p class="text-xs font-bold text-blue-600 mt-1">Sube: ${a.v} pts</p></div></li>`;
+                    let alertDot = a.v >= 3 ? `<span class="w-2 h-2 rounded-full bg-red-500 mt-1"></span>` : ``;
+                    html += `<li class="bg-white p-3 rounded-xl border border-slate-100 flex items-start gap-3"><span class="w-5 h-5 bg-slate-100 rounded-full flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-slate-400">${i + 1}</span><div class="flex-1"><p class="text-[11px] leading-tight text-slate-600">${a.q}</p><p class="text-xs font-bold text-blue-600 mt-1">Intensidad: ${a.v}</p></div>${alertDot}</li>`;
                 });
                 html += `</ul>`;
                 document.getElementById('report-output').innerHTML = html;
                 document.getElementById('report-output').classList.remove('hidden');
-                document.getElementById('download-btn').classList.remove('hidden');
             } catch (e) { alert("Código inválido."); }
-        }
-
-        function downloadReport() {
-            const code = document.getElementById('data-input').value.trim();
-            if (!code) return;
-            const data = JSON.parse(atob(code));
-            const diagnosis = data.puntaje >= 21 ? "Puntaje INDICATIVO de síntomas de TOC." : "Puntaje dentro de rangos normales.";
-            let text = `RESULTADOS PRUEBA OCI-R\n==============================\nPaciente: ${data.paciente}\nEdad: ${data.edad}\nOcupación: ${data.ocupacion}\nFecha: ${data.fecha}\nPuntaje Final: ${data.puntaje}\nDiagnóstico: ${diagnosis}\n==============================\n\nDETALLE DE RESPUESTAS:\n`;
-            data.respuestas.forEach((a, i) => { text += `Pregunta ${i + 1}: (${a.v} pts) - ${a.q}\n`; });
-            const blob = new Blob([text], { type: 'text/plain' });
-            const a = document.createElement('a');
-            a.href = window.URL.createObjectURL(blob);
-            a.download = `Resultado_OCI-R_${data.paciente.replace(/\s+/g, '_')}.txt`;
-            a.click();
         }
 
         function closePortal() { location.reload(); }
     </script>
 </body>
-
 </html>
-```
