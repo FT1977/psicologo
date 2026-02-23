@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario de Creencias Obsesivas (OBQ-44) | Psic. Fabio Torres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0284c7; /* Sky Blue */
+            --primary-dark: #0369a1;
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            margin: 0;
+            color: #0c4a6e;
+        }
+
+        .dynamic-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 25%);
+            animation: floatBg 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatBg {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .app-container {
+            width: 100%; max-width: 550px; padding: 1.5rem; margin: auto; position: relative; z-index: 10;
+        }
+
+        .premium-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -10px rgba(14, 165, 233, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .fade-out { animation: fadeOut 0.3s ease-in forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.98); }
+        }
+
+        .btn-option { transition: all 0.2s ease; position: relative; overflow: hidden; padding: 0.75rem 1rem; }
+        .btn-option:active { transform: scale(0.98); }
+        .btn-option:hover:not(.active) { background-color: #f0f9ff; border-color: var(--primary); transform: translateX(4px); }
+        .btn-option.active {
+            background-color: var(--primary) !important; color: white !important; border-color: var(--primary);
+            box-shadow: 0 4px 12px -2px rgba(14, 165, 233, 0.4);
+        }
+        
+        .btn-option.active span:last-child { background-color: white !important; color: var(--primary) !important; }
+        .btn-option.active span:first-child { color: white !important; }
+
+        .progress-glow { box-shadow: 0 0 10px rgba(14, 165, 233, 0.5); }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+
+<body>
+    <div class="dynamic-bg"></div>
+
+    <main class="app-container">
+        <div id="welcome-screen" class="premium-card rounded-[2rem] p-8 md:p-10 text-center fade-in">
+            <div class="mb-8">
+                <div class="w-20 h-20 bg-sky-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl rotate-3 transform hover:rotate-0 transition-transform duration-500">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-extrabold text-sky-900 mb-2 tracking-tight">Cuestionario OBQ-44</h1>
+                <p class="text-sky-600 font-bold tracking-widest uppercase text-[10px]">Psicólogo Fabio Torres • Creencias Cognitivas</p>
+            </div>
+
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                Esta evaluación clínica mide estilos de pensamiento y creencias personales. Responda con sinceridad basándose en su forma habitual de pensar, no en cómo se siente en este momento exacto.
+            </p>
+
+            <div class="space-y-4 mb-8">
+                <input type="text" id="patient-name" placeholder="Nombre completo" class="w-full p-4 bg-white border border-sky-100 rounded-xl focus:border-sky-500 transition-all outline-none text-slate-700 font-semibold text-sm">
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" id="patient-age" placeholder="Edad" class="w-full p-4 bg-white border border-sky-100 rounded-xl focus:border-sky-500 transition-all outline-none text-slate-700 font-semibold text-sm">
+                    <div class="relative">
+                        <select id="patient-job" class="w-full p-4 bg-white border border-sky-100 rounded-xl focus:border-sky-500 transition-all outline-none text-slate-700 font-semibold text-sm appearance-none">
+                            <option value="" disabled selected>Ocupación</option>
+                            <option value="Estudiante">Estudiante</option>
+                            <option value="Empleado">Empleado</option>
+                            <option value="Independiente">Independiente</option>
+                            <option value="Hogar">Hogar</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="goToInstructions()" class="w-full bg-sky-900 hover:bg-sky-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 active:scale-95 text-sm uppercase tracking-wide">
+                Iniciar Evaluación
+            </button>
+            
+            <button onclick="openPortal()" class="mt-8 text-sky-400 hover:text-sky-700 text-[10px] font-black tracking-[0.2em] uppercase transition-colors">
+                Panel Profesional
+            </button>
+        </div>
+
+        <div id="instruction-screen" class="premium-card rounded-[2rem] p-10 text-center hidden">
+            <h2 class="text-2xl font-extrabold text-sky-900 mb-6">Instrucciones</h2>
+            <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                A continuación leerá 44 afirmaciones. Por favor, indique su grado de acuerdo con cada una utilizando la siguiente escala del 1 al 7.
+            </p>
+            <div class="space-y-2 mb-8 text-left bg-sky-50 p-4 rounded-xl border border-sky-100">
+                <div class="flex items-center gap-3 text-xs text-slate-600"><span class="w-6 h-6 rounded bg-white font-bold flex items-center justify-center border border-sky-200">1</span><span>Totalmente en desacuerdo</span></div>
+                <div class="flex items-center gap-3 text-xs text-slate-600"><span class="w-6 h-6 rounded bg-white font-bold flex items-center justify-center border border-sky-200">4</span><span>Ni de acuerdo ni en desacuerdo</span></div>
+                <div class="flex items-center gap-3 text-xs text-slate-600"><span class="w-6 h-6 rounded bg-white font-bold flex items-center justify-center border border-sky-200">7</span><span>Totalmente de acuerdo</span></div>
+            </div>
+            <button onclick="startAssessment()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-1 active:scale-95 text-sm">
+                Comenzar Prueba
+            </button>
+        </div>
+
+        <div id="question-screen" class="premium-card rounded-[2rem] p-6 md:p-8 hidden">
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <button onclick="previousQuestion()" id="back-btn" class="text-slate-400 hover:text-sky-600 transition-colors flex items-center gap-1 invisible group">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Volver</span>
+                    </button>
+                    <div class="text-right">
+                        <span class="text-[10px] font-black text-sky-500 uppercase tracking-widest block mb-1">OBQ-44</span>
+                        <span id="progress-text" class="text-xs font-bold text-slate-400">1/44</span>
+                    </div>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="progress-bar" class="bg-sky-500 h-full rounded-full transition-all duration-300 progress-glow" style="width: 2%"></div>
+                </div>
+            </div>
+
+            <div class="min-h-[6rem] mb-6 flex flex-col justify-center">
+                <h2 id="question-text" class="text-lg md:text-xl font-bold text-slate-800 leading-snug"></h2>
+            </div>
+
+            <div class="space-y-2" id="options-container">
+                </div>
+        </div>
+
+        <div id="finish-screen" class="premium-card rounded-[2rem] p-10 text-center hidden">
+            <div id="upload-status">
+                <div class="w-16 h-16 bg-sky-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-sky-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-sky-900">Calculando Subescalas...</h2>
+            </div>
+
+            <div id="final-actions" class="hidden fade-in">
+                <div class="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h2 class="text-2xl font-extrabold text-sky-900 mb-4">Evaluación Finalizada</h2>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                    Las 44 respuestas han sido guardadas. Confirme el envío para notificar al especialista.
+                </p>
+                <button onclick="notifyWhatsApp()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    Confirmar por WhatsApp
+                </button>
+            </div>
+        </div>
+
+        <div id="psychologist-portal" class="premium-card rounded-[2rem] p-8 hidden fade-in">
+            <div class="flex items-center gap-4 mb-8 border-b border-sky-100 pb-6">
+                <div class="w-12 h-12 bg-sky-900 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                </div>
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900">Portal Clínico OBQ-44</h2>
+                    <p class="text-[10px] text-sky-600 font-bold uppercase">Acceso Restringido</p>
+                </div>
+            </div>
+
+            <div id="auth-section">
+                <input type="password" id="admin-pass" placeholder="Clave de acceso" class="w-full p-4 bg-sky-50 border border-sky-100 rounded-xl mb-4 outline-none font-bold text-center tracking-widest text-sm focus:bg-white focus:border-sky-500 transition-all">
+                <button onclick="unlockPortal()" class="w-full bg-sky-900 text-white font-bold py-4 rounded-xl shadow-lg text-sm">Ingresar</button>
+            </div>
+
+            <div id="results-viewer" class="hidden space-y-4 fade-in">
+                <textarea id="data-input" rows="2" placeholder="Pegue el código cifrado aquí..." class="w-full p-4 bg-sky-50 border border-sky-100 rounded-xl text-[10px] font-mono resize-none outline-none focus:border-sky-500"></textarea>
+                <button onclick="processData()" class="w-full bg-sky-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-sky-100 text-sm">Decodificar Informe</button>
+                <div id="report-output" class="bg-white p-5 rounded-2xl border border-sky-50 text-sm hidden shadow-inner"></div>
+                <button onclick="closePortal()" class="w-full bg-slate-100 text-slate-500 font-bold py-3 rounded-xl hover:text-slate-800 text-xs uppercase">Cerrar Sesión</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /* --- CONFIGURACIÓN DEL TERAPEUTA --- */
+        const PSICOLOGO_EMAIL = "psicologofabiotorres@gmail.com";
+        const WHATSAPP_NUMBER = "573216284300";
+        /* ----------------------------------- */
+
+        // OBQ-44: Ítems y sus dominios
+        // RT: Responsabilidad y Sobreestimación de Amenaza (16 ítems)
+        // PC: Perfeccionismo e Intolerancia a la Incertidumbre (16 ítems)
+        // ICT: Importancia y Control de Pensamientos (12 ítems)
+        const obqQuestions = [
+            { t: "1. A menudo pienso que las cosas a mi alrededor no son seguras.", d: "RT" },
+            { t: "2. Si no estoy absolutamente seguro de algo, es probable que cometa un error.", d: "PC" },
+            { t: "3. Las cosas deben hacerse perfectamente, o no vale la pena hacerlas.", d: "PC" },
+            { t: "4. Tener un pensamiento desagradable significa que soy una mala persona.", d: "ICT" },
+            { t: "5. Si no tengo extremo cuidado, las cosas saldrán mal.", d: "RT" },
+            { t: "6. Debo tener un control total sobre mi mente en todo momento.", d: "ICT" },
+            { t: "7. Evitar el riesgo es fundamental en la vida.", d: "RT" },
+            { t: "8. Incluso los errores más pequeños significan un fracaso absoluto.", d: "PC" },
+            { t: "9. Si no trato de controlar un pensamiento intrusivo, es como si deseara que ocurriera.", d: "ICT" },
+            { t: "10. Soy responsable de evitar que ocurran desastres.", d: "RT" },
+            { t: "11. No puedo tolerar no estar seguro de lo que va a pasar.", d: "PC" },
+            { t: "12. Tener pensamientos violentos o sucios es inaceptable.", d: "ICT" },
+            { t: "13. Si sé que algo malo puede pasar, estoy obligado a impedirlo.", d: "RT" },
+            { t: "14. Para ser una persona valiosa, debo ser perfecto en todo lo que hago.", d: "PC" },
+            { t: "15. Pensar en algo malo hace que sea más probable que ocurra.", d: "ICT" },
+            { t: "16. Los peligros están en todas partes, siempre debo estar alerta.", d: "RT" },
+            { t: "17. Un desempeño promedio es lo mismo que un fracaso.", d: "PC" },
+            { t: "18. Tratar de olvidar un mal pensamiento es inútil, debo analizarlo.", d: "ICT" },
+            { t: "19. Cualquier pequeño descuido mío puede causar un gran daño.", d: "RT" },
+            { t: "20. Siempre hay una única forma correcta de hacer las cosas.", d: "PC" },
+            { t: "21. Pensar en lastimar a alguien es casi tan malo como hacerlo.", d: "ICT" },
+            { t: "22. Si alguien resulta herido y yo pude evitarlo, es mi culpa.", d: "RT" },
+            { t: "23. Debo planear todo con anticipación para evitar sorpresas.", d: "PC" },
+            { t: "24. Debo ser capaz de librar mi mente de dudas absurdas.", d: "ICT" },
+            { t: "25. La falta de cuidado lleva inevitablemente al desastre.", d: "RT" },
+            { t: "26. Me frustra mucho cuando las cosas no siguen un orden exacto.", d: "PC" },
+            { t: "27. Si tengo una duda sobre si cerré bien algo, debo comprobarlo.", d: "PC" },
+            { t: "28. Es peligroso dejarse llevar por las emociones sin controlarlas.", d: "ICT" },
+            { t: "29. Prevenir problemas graves es mi responsabilidad principal.", d: "RT" },
+            { t: "30. Los resultados que no son perfectos no sirven para nada.", d: "PC" },
+            { t: "31. Si me viene a la mente una imagen horrible, algo anda mal en mi cerebro.", d: "ICT" },
+            { t: "32. Las probabilidades de que ocurra una tragedia son altas.", d: "RT" },
+            { t: "33. La ambigüedad me resulta insoportable.", d: "PC" },
+            { t: "34. Las personas buenas no tienen pensamientos retorcidos.", d: "ICT" },
+            { t: "35. Un error honesto sigue siendo algo imperdonable.", d: "PC" },
+            { t: "36. Si no estoy preparado para lo peor, soy un irresponsable.", d: "RT" },
+            { t: "37. No tener el 100% de certeza me genera mucha ansiedad.", d: "PC" },
+            { t: "38. Un pensamiento sin control es un peligro inminente.", d: "ICT" },
+            { t: "39. Me siento culpable si las cosas no salen bien para otros.", d: "RT" },
+            { t: "40. Las cosas en mi entorno deben estar dispuestas exactamente como quiero.", d: "PC" },
+            { t: "41. No puedo perdonarme si cometo un error en el trabajo o estudio.", d: "PC" },
+            { t: "42. Si pienso en blasfemias, merezco ser castigado.", d: "ICT" },
+            { t: "43. El mundo es un lugar extremadamente peligroso.", d: "RT" },
+            { t: "44. Tengo el deber de hacer que todo esté a salvo.", d: "RT" }
+        ];
+
+        const labels = [
+            "1 - Totalmente en desacuerdo",
+            "2 - Moderadamente en desacuerdo",
+            "3 - Un poco en desacuerdo",
+            "4 - Ni de acuerdo ni en desacuerdo",
+            "5 - Un poco de acuerdo",
+            "6 - Moderadamente de acuerdo",
+            "7 - Totalmente de acuerdo"
+        ];
+
+        let currentQ = 0;
+        let answers = []; 
+        let patient = { name: "", age: "", job: "" };
+        let generatedCode = "";
+        let testStartTime = null;
+
+        const screens = {
+            welcome: document.getElementById('welcome-screen'),
+            instruction: document.getElementById('instruction-screen'),
+            question: document.getElementById('question-screen'),
+            finish: document.getElementById('finish-screen'),
+            portal: document.getElementById('psychologist-portal')
+        };
+
+        // Generar botones Likert
+        const optionsContainer = document.getElementById('options-container');
+        labels.forEach((label, index) => {
+            const val = index + 1;
+            const btn = document.createElement('button');
+            btn.className = 'btn-option w-full text-left bg-white border border-sky-50 rounded-xl flex items-center justify-between group';
+            btn.id = `btn-val-${val}`;
+            btn.onclick = () => recordAnswer(val, btn);
+            btn.innerHTML = `
+                <span class="text-sm font-semibold text-slate-600 group-hover:text-sky-700">${label.substring(4)}</span>
+                <span class="w-6 h-6 rounded border border-sky-100 bg-sky-50 flex items-center justify-center text-[10px] font-black text-sky-500 group-hover:bg-sky-600 group-hover:text-white transition-colors flex-shrink-0">${val}</span>
+            `;
+            optionsContainer.appendChild(btn);
+        });
+
+        function goToInstructions() {
+            patient.name = document.getElementById('patient-name').value.trim();
+            patient.age = document.getElementById('patient-age').value.trim();
+            patient.job = document.getElementById('patient-job').value;
+            if (!patient.name || !patient.age || !patient.job) return alert("Complete todos los datos.");
+            screens.welcome.classList.add('hidden');
+            screens.instruction.classList.remove('hidden');
+            screens.instruction.classList.add('fade-in');
+        }
+
+        function startAssessment() {
+            testStartTime = new Date();
+            screens.instruction.classList.add('hidden');
+            screens.question.classList.remove('hidden');
+            screens.question.classList.add('fade-in');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('question-text').textContent = obqQuestions[currentQ].t;
+            document.getElementById('progress-text').textContent = `${currentQ + 1}/44`;
+            document.getElementById('progress-bar').style.width = `${((currentQ + 1) / 44) * 100}%`;
+            
+            const backBtn = document.getElementById('back-btn');
+            currentQ > 0 ? backBtn.classList.remove('invisible') : backBtn.classList.add('invisible');
+
+            document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
+            if(answers[currentQ]) document.getElementById(`btn-val-${answers[currentQ]}`).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function previousQuestion() {
+            if (currentQ > 0) {
+                currentQ--;
+                transitionQuestion();
+            }
+        }
+
+        function recordAnswer(value, btn) {
+            document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            setTimeout(() => {
+                answers[currentQ] = value;
+                currentQ++;
+                if (currentQ < 44) {
+                    transitionQuestion();
+                } else {
+                    calculateAndSend();
+                }
+            }, 150);
+        }
+
+        function transitionQuestion() {
+            screens.question.classList.add('fade-out');
+            setTimeout(() => {
+                showQuestion();
+                screens.question.classList.remove('fade-out');
+                screens.question.classList.add('fade-in');
+                setTimeout(() => screens.question.classList.remove('fade-in'), 300);
+            }, 200);
+        }
+
+        async function calculateAndSend() {
+            const timeDiff = Math.floor((new Date() - testStartTime) / 1000);
+            const timeString = `${Math.floor(timeDiff / 60)} min y ${timeDiff % 60} seg`;
+
+            screens.question.classList.add('hidden');
+            screens.finish.classList.remove('hidden');
+            screens.finish.classList.add('fade-in');
+
+            let totals = { RT: 0, PC: 0, ICT: 0, Total: 0 };
+            answers.forEach((val, idx) => {
+                const domain = obqQuestions[idx].d;
+                totals[domain] += val;
+                totals.Total += val;
+            });
+
+            const rawData = {
+                p: patient,
+                date: new Date().toLocaleString(),
+                t: totals,
+                time: timeString
+            };
+
+            generatedCode = btoa(JSON.stringify(rawData));
+
+            let reportHtml = `
+                EVALUACIÓN DE CREENCIAS OBSESIVAS (OBQ-44)
+                =========================================
+                PACIENTE: ${patient.name} (${patient.age} años)
+                OCUPACIÓN: ${patient.job}
+                TIEMPO DE RESOLUCIÓN: ${timeString}
+                
+                PUNTAJE TOTAL: ${totals.Total} / 308
+                
+                SUBESCALAS CLÍNICAS:
+                - Responsabilidad / Amenaza (RT): ${totals.RT} / 112
+                - Perfeccionismo / Incertidumbre (PC): ${totals.PC} / 112
+                - Importancia / Control Pensamientos (ICT): ${totals.ICT} / 84
+            `;
+
+            try {
+                const formData = new FormData();
+                formData.append("message", reportHtml);
+                formData.append("_subject", `OBQ-44: ${patient.name} - Total: ${totals.Total}`);
+                formData.append("_captcha", "false");
+                formData.append("email", PSICOLOGO_EMAIL);
+
+                await fetch(`https://formsubmit.co/ajax/${PSICOLOGO_EMAIL}`, {
+                    method: "POST", body: formData
+                });
+            } catch (e) {}
+
+            document.getElementById('upload-status').classList.add('hidden');
+            document.getElementById('final-actions').classList.remove('hidden');
+        }
+
+        function notifyWhatsApp() {
+            const msg = `Hola Fabio, completé el test OBQ-44. Soy ${patient.name}.\n\nCódigo de acceso:\n${generatedCode}`;
+            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+        }
+
+        /* --- PORTAL CLÍNICO --- */
+        function openPortal() {
+            Object.values(screens).forEach(s => s.classList.add('hidden'));
+            screens.portal.classList.remove('hidden');
+        }
+
+        function unlockPortal() {
+            if (document.getElementById('admin-pass').value === "zapato") {
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('results-viewer').classList.remove('hidden');
+            } else { alert("Clave incorrecta"); }
+        }
+
+        function processData() {
+            const code = document.getElementById('data-input').value.trim();
+            if(!code) return;
+            try {
+                const d = JSON.parse(atob(code));
+                
+                // Cálculo de porcentajes para barras visuales
+                const pctRT = Math.round((d.t.RT / 112) * 100);
+                const pctPC = Math.round((d.t.PC / 112) * 100);
+                const pctICT = Math.round((d.t.ICT / 84) * 100);
+
+                let html = `
+                    <div class="border-b border-slate-100 pb-3 mb-3">
+                        <h3 class="font-bold text-slate-800">${d.p.name}</h3>
+                        <p class="text-[10px] text-slate-400 uppercase">${d.p.age} años • ${d.p.job} • ⏱️ ${d.time}</p>
+                    </div>
+                    
+                    <div class="bg-sky-50 rounded-xl p-4 text-center mb-4">
+                        <p class="text-[10px] font-bold text-sky-600 uppercase tracking-widest mb-1">Puntaje Global</p>
+                        <p class="text-3xl font-black text-sky-900">${d.t.Total} <span class="text-sm font-normal text-sky-400">/ 308</span></p>
+                    </div>
+
+                    <div class="space-y-4 text-xs font-semibold text-slate-600">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Responsabilidad / Amenaza</span>
+                                <span class="text-sky-700">${d.t.RT}/112</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-sky-500 h-2 rounded-full" style="width: ${pctRT}%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Perfeccionismo / Incertidumbre</span>
+                                <span class="text-sky-700">${d.t.PC}/112</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width: ${pctPC}%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Control de Pensamientos</span>
+                                <span class="text-sky-700">${d.t.ICT}/84</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width: ${pctICT}%"></div></div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('report-output').innerHTML = html;
+                document.getElementById('report-output').classList.remove('hidden');
+            } catch(e) { alert("Código corrupto"); }
+        }
+
+        function closePortal() { location.reload(); }
+    </script>
+</body>
+</html>

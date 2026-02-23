@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instrumento de Vínculo Parental (PBI) | Psic. Fabio Torres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5; /* Indigo */
+            --primary-dark: #3730a3;
+            --bg-gradient: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            margin: 0;
+            color: #1e1b4b;
+        }
+
+        .dynamic-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.08) 0%, transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 30%);
+            animation: floatBg 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatBg {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .app-container {
+            width: 100%; max-width: 550px; padding: 1.5rem; margin: auto; position: relative; z-index: 10;
+        }
+
+        .premium-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .fade-out { animation: fadeOut 0.3s ease-in forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.98); }
+        }
+
+        .btn-option { transition: all 0.2s ease; position: relative; overflow: hidden; padding: 1rem; }
+        .btn-option:active { transform: scale(0.98); }
+        .btn-option:hover:not(.active) { background-color: #eef2ff; border-color: var(--primary); transform: translateX(4px); }
+        .btn-option.active {
+            background-color: var(--primary) !important; color: white !important; border-color: var(--primary);
+            box-shadow: 0 4px 12px -2px rgba(79, 70, 229, 0.4);
+        }
+        
+        .btn-option.active span:last-child { background-color: white !important; color: var(--primary) !important; }
+        .btn-option.active span:first-child { color: white !important; }
+
+        .progress-glow { box-shadow: 0 0 10px rgba(79, 70, 229, 0.5); }
+    </style>
+</head>
+
+<body>
+    <div class="dynamic-bg"></div>
+
+    <main class="app-container">
+        <div id="welcome-screen" class="premium-card rounded-[2rem] p-8 md:p-10 text-center fade-in">
+            <div class="mb-8">
+                <div class="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl rotate-3 transform hover:rotate-0 transition-transform duration-500">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-extrabold text-indigo-900 mb-2 tracking-tight">Cuestionario PBI</h1>
+                <p class="text-indigo-600 font-bold tracking-widest uppercase text-[10px]">Psicólogo Fabio Torres • Vínculo Parental</p>
+            </div>
+
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                Esta evaluación analiza las actitudes y comportamientos de sus padres durante sus primeros 16 años de vida.
+            </p>
+
+            <div class="space-y-4 mb-8 text-left">
+                <input type="text" id="patient-name" placeholder="Nombre completo" class="w-full p-4 bg-white border border-indigo-100 rounded-xl focus:border-indigo-500 transition-all outline-none text-slate-700 font-semibold text-sm">
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" id="patient-age" placeholder="Edad" class="w-full p-4 bg-white border border-indigo-100 rounded-xl focus:border-indigo-500 transition-all outline-none text-slate-700 font-semibold text-sm">
+                    <div class="relative">
+                        <select id="patient-parent" class="w-full p-4 bg-white border border-indigo-100 rounded-xl focus:border-indigo-500 transition-all outline-none text-slate-700 font-semibold text-sm appearance-none cursor-pointer">
+                            <option value="" disabled selected>Figura a evaluar</option>
+                            <option value="Madre">Madre</option>
+                            <option value="Padre">Padre</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="goToInstructions()" class="w-full bg-indigo-900 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 active:scale-95 text-sm uppercase tracking-wide">
+                Iniciar Evaluación
+            </button>
+            
+            <button onclick="openPortal()" class="mt-8 text-indigo-400 hover:text-indigo-700 text-[10px] font-black tracking-[0.2em] uppercase transition-colors">
+                Panel Profesional
+            </button>
+        </div>
+
+        <div id="instruction-screen" class="premium-card rounded-[2rem] p-10 text-center hidden">
+            <h2 class="text-2xl font-extrabold text-indigo-900 mb-6">Instrucciones</h2>
+            <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 mb-6 text-left">
+                <p class="text-slate-700 text-sm leading-relaxed">
+                    A continuación leerá 25 afirmaciones. Por favor, intente recordar cómo fue la actitud de la <strong>figura seleccionada</strong> durante sus <strong>primeros 16 años de vida</strong>. 
+                    <br><br>
+                    Indique qué tan parecida era su conducta a lo descrito utilizando la escala proporcionada.
+                </p>
+            </div>
+            <button onclick="startAssessment()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-1 active:scale-95 text-sm">
+                Comenzar Prueba
+            </button>
+        </div>
+
+        <div id="question-screen" class="premium-card rounded-[2rem] p-6 md:p-8 hidden">
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <button onclick="previousQuestion()" id="back-btn" class="text-slate-400 hover:text-indigo-600 transition-colors flex items-center gap-1 invisible group">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Volver</span>
+                    </button>
+                    <div class="text-right">
+                        <span id="eval-target" class="text-[10px] font-black text-indigo-500 uppercase tracking-widest block mb-1">PBI</span>
+                        <span id="progress-text" class="text-xs font-bold text-slate-400">1/25</span>
+                    </div>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="progress-bar" class="bg-indigo-500 h-full rounded-full transition-all duration-300 progress-glow" style="width: 4%"></div>
+                </div>
+            </div>
+
+            <div class="min-h-[7rem] mb-6 flex flex-col justify-center text-center">
+                <h2 id="question-text" class="text-xl md:text-2xl font-bold text-slate-800 leading-snug"></h2>
+            </div>
+
+            <div class="space-y-3" id="options-container">
+                </div>
+        </div>
+
+        <div id="finish-screen" class="premium-card rounded-[2rem] p-10 text-center hidden">
+            <div id="upload-status">
+                <div class="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-indigo-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-indigo-900">Analizando Vínculo...</h2>
+            </div>
+
+            <div id="final-actions" class="hidden fade-in">
+                <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h2 class="text-2xl font-extrabold text-indigo-900 mb-4">Evaluación Finalizada</h2>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                    Sus respuestas han sido cifradas y guardadas. Confirme el envío al psicólogo.
+                </p>
+                <button onclick="notifyWhatsApp()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    Confirmar por WhatsApp
+                </button>
+            </div>
+        </div>
+
+        <div id="psychologist-portal" class="premium-card rounded-[2rem] p-8 hidden fade-in">
+            <div class="flex items-center gap-4 mb-8 border-b border-indigo-100 pb-6">
+                <div class="w-12 h-12 bg-indigo-900 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900">Portal Clínico PBI</h2>
+                    <p class="text-[10px] text-indigo-600 font-bold uppercase">Acceso Restringido</p>
+                </div>
+            </div>
+
+            <div id="auth-section">
+                <input type="password" id="admin-pass" placeholder="Clave de acceso" class="w-full p-4 bg-indigo-50 border border-indigo-100 rounded-xl mb-4 outline-none font-bold text-center tracking-widest text-sm focus:bg-white focus:border-indigo-500 transition-all">
+                <button onclick="unlockPortal()" class="w-full bg-indigo-900 text-white font-bold py-4 rounded-xl shadow-lg text-sm">Ingresar</button>
+            </div>
+
+            <div id="results-viewer" class="hidden space-y-4 fade-in">
+                <textarea id="data-input" rows="2" placeholder="Pegue el código cifrado aquí..." class="w-full p-4 bg-indigo-50 border border-indigo-100 rounded-xl text-[10px] font-mono resize-none outline-none focus:border-indigo-500"></textarea>
+                <button onclick="processData()" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-100 text-sm">Decodificar Informe</button>
+                <div id="report-output" class="bg-white p-5 rounded-2xl border border-indigo-50 text-sm hidden shadow-inner"></div>
+                <button onclick="closePortal()" class="w-full bg-slate-100 text-slate-500 font-bold py-3 rounded-xl hover:text-slate-800 text-xs uppercase">Cerrar Sesión</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /* --- CONFIGURACIÓN DEL TERAPEUTA --- */
+        const PSICOLOGO_EMAIL = "psicologofabiotorres@gmail.com";
+        const WHATSAPP_NUMBER = "573216284300";
+        /* ----------------------------------- */
+
+        // PBI: 25 ítems. c=Cuidado (Care), o=Sobreprotección (Overprotection)
+        // d=Directo (0->0, 3->3), r=Inverso (0->3, 3->0)
+        const pbiQuestions = [
+            { t: "1. Me hablaba con un tono de voz cálido y amigable.", type: "c", dir: "d" },
+            { t: "2. No me ayudaba tanto como lo necesitaba.", type: "c", dir: "r" },
+            { t: "3. Me dejaba hacer las cosas que me gustaba hacer.", type: "o", dir: "r" },
+            { t: "4. Parecía ser emocionalmente frío/a conmigo.", type: "c", dir: "r" },
+            { t: "5. Parecía entender mis problemas y preocupaciones.", type: "c", dir: "d" },
+            { t: "6. Era cariñoso/a conmigo.", type: "c", dir: "d" },
+            { t: "7. Le gustaba que yo tomara mis propias decisiones.", type: "o", dir: "r" },
+            { t: "8. No quería que yo creciera.", type: "o", dir: "d" },
+            { t: "9. Trataba de controlar todo lo que yo hacía.", type: "o", dir: "d" },
+            { t: "10. Invadía mi privacidad.", type: "o", dir: "d" },
+            { t: "11. Disfrutaba de conversar las cosas conmigo.", type: "c", dir: "d" },
+            { t: "12. Me sonreía frecuentemente.", type: "c", dir: "d" },
+            { t: "13. Tendía a tratarme como si fuera más pequeño/a.", type: "o", dir: "d" },
+            { t: "14. Parecía no entender lo que yo necesitaba o quería.", type: "c", dir: "r" },
+            { t: "15. Me dejaba decidir las cosas por mí mismo/a.", type: "o", dir: "r" },
+            { t: "16. Me hacía sentir que no era querido/a.", type: "c", dir: "r" },
+            { t: "17. Me hacía sentir mejor cuando yo estaba alterado/a o triste.", type: "c", dir: "d" },
+            { t: "18. No conversaba mucho conmigo.", type: "c", dir: "r" },
+            { t: "19. Trataba de hacerme sentir dependiente de él/ella.", type: "o", dir: "d" },
+            { t: "20. Yo sentía que no podía valerme por mí mismo/a a menos que él/ella estuviera cerca.", type: "o", dir: "d" },
+            { t: "21. Me daba toda la libertad que yo quería.", type: "o", dir: "r" },
+            { t: "22. Me dejaba salir a menudo o tanto como yo quisiera.", type: "o", dir: "r" },
+            { t: "23. Era sobreprotector/a conmigo.", type: "o", dir: "d" },
+            { t: "24. No me elogiaba ni me reconocía mis logros.", type: "c", dir: "r" },
+            { t: "25. Me dejaba vestirme de la forma que yo quería.", type: "o", dir: "r" }
+        ];
+
+        const labels = [
+            { text: "Muy distinto", val: 0 },
+            { text: "Moderadamente distinto", val: 1 },
+            { text: "Moderadamente parecido", val: 2 },
+            { text: "Muy parecido", val: 3 }
+        ];
+
+        let currentQ = 0;
+        let answers = []; 
+        let patient = { name: "", age: "", parent: "" };
+        let generatedCode = "";
+        let testStartTime = null;
+
+        const screens = {
+            welcome: document.getElementById('welcome-screen'),
+            instruction: document.getElementById('instruction-screen'),
+            question: document.getElementById('question-screen'),
+            finish: document.getElementById('finish-screen'),
+            portal: document.getElementById('psychologist-portal')
+        };
+
+        const optionsContainer = document.getElementById('options-container');
+        labels.forEach((opt) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-option w-full text-left bg-white border border-indigo-50 rounded-xl flex items-center justify-between group';
+            btn.id = `btn-val-${opt.val}`;
+            btn.onclick = () => recordAnswer(opt.val, btn);
+            btn.innerHTML = `
+                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-700">${opt.text}</span>
+                <span class="w-6 h-6 rounded border border-indigo-100 bg-indigo-50 flex items-center justify-center text-[10px] font-black text-indigo-500 group-hover:bg-indigo-600 group-hover:text-white transition-colors flex-shrink-0">${opt.val}</span>
+            `;
+            optionsContainer.appendChild(btn);
+        });
+
+        function goToInstructions() {
+            patient.name = document.getElementById('patient-name').value.trim();
+            patient.age = document.getElementById('patient-age').value.trim();
+            patient.parent = document.getElementById('patient-parent').value;
+            if (!patient.name || !patient.age || !patient.parent) return alert("Por favor complete todos los campos, incluyendo la figura a evaluar.");
+            
+            document.getElementById('eval-target').textContent = `EVALUANDO A: ${patient.parent}`;
+            screens.welcome.classList.add('hidden');
+            screens.instruction.classList.remove('hidden');
+            screens.instruction.classList.add('fade-in');
+        }
+
+        function startAssessment() {
+            testStartTime = new Date();
+            screens.instruction.classList.add('hidden');
+            screens.question.classList.remove('hidden');
+            screens.question.classList.add('fade-in');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('question-text').textContent = pbiQuestions[currentQ].t;
+            document.getElementById('progress-text').textContent = `${currentQ + 1}/25`;
+            document.getElementById('progress-bar').style.width = `${((currentQ + 1) / 25) * 100}%`;
+            
+            const backBtn = document.getElementById('back-btn');
+            currentQ > 0 ? backBtn.classList.remove('invisible') : backBtn.classList.add('invisible');
+
+            document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
+            if(answers[currentQ] !== undefined) document.getElementById(`btn-val-${answers[currentQ]}`).classList.add('active');
+        }
+
+        function previousQuestion() {
+            if (currentQ > 0) {
+                currentQ--;
+                transitionQuestion();
+            }
+        }
+
+        function recordAnswer(value, btn) {
+            document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            setTimeout(() => {
+                answers[currentQ] = value;
+                currentQ++;
+                if (currentQ < 25) {
+                    transitionQuestion();
+                } else {
+                    calculateAndSend();
+                }
+            }, 200);
+        }
+
+        function transitionQuestion() {
+            screens.question.classList.add('fade-out');
+            setTimeout(() => {
+                showQuestion();
+                screens.question.classList.remove('fade-out');
+                screens.question.classList.add('fade-in');
+                setTimeout(() => screens.question.classList.remove('fade-in'), 300);
+            }, 200);
+        }
+
+        async function calculateAndSend() {
+            const timeDiff = Math.floor((new Date() - testStartTime) / 1000);
+            const timeString = `${Math.floor(timeDiff / 60)} min y ${timeDiff % 60} seg`;
+
+            screens.question.classList.add('hidden');
+            screens.finish.classList.remove('hidden');
+            screens.finish.classList.add('fade-in');
+
+            let totals = { care: 0, op: 0 };
+            answers.forEach((val, idx) => {
+                const item = pbiQuestions[idx];
+                const score = item.dir === "d" ? val : (3 - val);
+                if(item.type === "c") totals.care += score;
+                if(item.type === "o") totals.op += score;
+            });
+
+            const rawData = {
+                p: patient,
+                date: new Date().toLocaleString(),
+                t: totals,
+                time: timeString
+            };
+
+            generatedCode = btoa(JSON.stringify(rawData));
+
+            let reportHtml = `
+                EVALUACIÓN DE VÍNCULO PARENTAL (PBI)
+                =========================================
+                PACIENTE: ${patient.name} (${patient.age} años)
+                FIGURA EVALUADA: ${patient.parent}
+                TIEMPO: ${timeString}
+                
+                PUNTAJES OBTENIDOS:
+                - Cuidado / Afecto: ${totals.care} / 36
+                - Sobreprotección: ${totals.op} / 39
+            `;
+
+            try {
+                const formData = new FormData();
+                formData.append("message", reportHtml);
+                formData.append("_subject", `PBI: ${patient.name} - Figura: ${patient.parent}`);
+                formData.append("_captcha", "false");
+                formData.append("email", PSICOLOGO_EMAIL);
+
+                await fetch(`https://formsubmit.co/ajax/${PSICOLOGO_EMAIL}`, {
+                    method: "POST", body: formData
+                });
+            } catch (e) {}
+
+            document.getElementById('upload-status').classList.add('hidden');
+            document.getElementById('final-actions').classList.remove('hidden');
+        }
+
+        function notifyWhatsApp() {
+            const msg = `Hola Fabio, completé el test de Vínculo Parental evaluando a mi ${patient.parent}. Soy ${patient.name}.\n\nCódigo de acceso:\n${generatedCode}`;
+            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+        }
+
+        /* --- PORTAL CLÍNICO --- */
+        function openPortal() {
+            Object.values(screens).forEach(s => s.classList.add('hidden'));
+            screens.portal.classList.remove('hidden');
+        }
+
+        function unlockPortal() {
+            if (document.getElementById('admin-pass').value === "zapato") {
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('results-viewer').classList.remove('hidden');
+            } else { alert("Clave incorrecta"); }
+        }
+
+        function processData() {
+            const code = document.getElementById('data-input').value.trim();
+            if(!code) return;
+            try {
+                const d = JSON.parse(atob(code));
+                
+                // Puntos de corte estándar según género del progenitor
+                const cCut = d.p.parent === 'Padre' ? 24.0 : 27.0;
+                const oCut = d.p.parent === 'Padre' ? 12.5 : 13.5;
+
+                const cHigh = d.t.care > cCut;
+                const oHigh = d.t.op > oCut;
+
+                let quadrant = "";
+                let qColor = "";
+                
+                if (cHigh && !oHigh) { 
+                    quadrant = "Vínculo Óptimo"; 
+                    qColor = "text-emerald-600 bg-emerald-50 border-emerald-200"; 
+                } else if (!cHigh && oHigh) { 
+                    quadrant = "Control sin Afecto"; 
+                    qColor = "text-red-600 bg-red-50 border-red-200"; 
+                } else if (cHigh && oHigh) { 
+                    quadrant = "Constricción Afectiva"; 
+                    qColor = "text-amber-600 bg-amber-50 border-amber-200"; 
+                } else { 
+                    quadrant = "Vínculo Ausente / Negligente"; 
+                    qColor = "text-slate-500 bg-slate-50 border-slate-200"; 
+                }
+
+                let html = `
+                    <div class="border-b border-indigo-100 pb-3 mb-3">
+                        <h3 class="font-bold text-slate-800 text-lg">${d.p.name}</h3>
+                        <p class="text-[10px] text-indigo-500 font-bold uppercase tracking-widest mt-1">Evaluando a: ${d.p.parent}</p>
+                    </div>
+                    
+                    <div class="rounded-xl p-4 text-center mb-4 border ${qColor}">
+                        <p class="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-75">Diagnóstico Vincular</p>
+                        <p class="text-xl font-black">${quadrant}</p>
+                    </div>
+
+                    <div class="space-y-4 text-xs font-semibold text-slate-600">
+                        <div class="bg-white p-3 rounded-lg border border-slate-100">
+                            <div class="flex justify-between items-center mb-1">
+                                <span>Cuidado / Afecto</span>
+                                <span class="text-indigo-700 font-black text-sm">${d.t.care} <span class="text-[10px] font-normal text-slate-400">/ 36</span></span>
+                            </div>
+                            <p class="text-[10px] text-slate-400 font-normal">Punto de corte (${d.p.parent}): > ${cCut}</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-slate-100">
+                            <div class="flex justify-between items-center mb-1">
+                                <span>Sobreprotección</span>
+                                <span class="text-purple-700 font-black text-sm">${d.t.op} <span class="text-[10px] font-normal text-slate-400">/ 39</span></span>
+                            </div>
+                            <p class="text-[10px] text-slate-400 font-normal">Punto de corte (${d.p.parent}): > ${oCut}</p>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('report-output').innerHTML = html;
+                document.getElementById('report-output').classList.remove('hidden');
+            } catch(e) { alert("Código corrupto o inválido"); }
+        }
+
+        function closePortal() { location.reload(); }
+    </script>
+</body>
+</html>
