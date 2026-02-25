@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Reagendamiento | Espiritualidad y Vida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #c29b6b;
+            --bg-light: #faf9f6; 
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+        }
+        .spiritual-bg {
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(194, 155, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(79, 70, 229, 0.05) 0%, transparent 50%);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+        }
+        .policy-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px -5px rgba(194, 155, 107, 0.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 relative">
+    <div class="spiritual-bg"></div>
+
+    <div class="max-w-2xl w-full policy-card rounded-[2rem] p-8 md:p-12 relative z-10">
+        <a href="index.html" class="inline-flex items-center text-xs font-bold text-slate-400 hover:text-amber-600 transition-colors uppercase tracking-widest mb-8">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Volver al inicio
+        </a>
+
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4 text-center">¿Necesitas reprogramar tu sesión?</h1>
+        <p class="text-slate-500 text-center mb-10 leading-relaxed">
+            Para garantizar la continuidad de tu proceso y respetar los tiempos de todos, hemos establecido las siguientes políticas de asistencia:
+        </p>
+
+        <div class="space-y-6">
+            <div class="flex gap-4 items-start bg-white/50 p-5 rounded-2xl border border-slate-100">
+                <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <h2 class="font-bold text-slate-800 text-lg mb-1">Anticipación</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">Puedes reagendar tu cita sin costo adicional siempre que avises con un mínimo de <strong>24 horas de antelación</strong>. Esto permite que otro paciente que necesite el espacio pueda aprovecharlo.</p>
+                </div>
+            </div>
+
+            <div class="flex gap-4 items-start bg-white/50 p-5 rounded-2xl border border-slate-100">
+                <div class="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div>
+                    <h2 class="font-bold text-slate-800 text-lg mb-1">Cancelaciones el mismo día</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">Las citas canceladas o reagendadas el mismo día reciben un <strong>cobro del 50%</strong> de la tarifa de la sesión, ya que ese espacio fue reservado exclusivamente para ti.</p>
+                </div>
+            </div>
+
+            <div class="flex gap-4 items-start bg-white/50 p-5 rounded-2xl border border-slate-100">
+                <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </div>
+                <div>
+                    <h2 class="font-bold text-slate-800 text-lg mb-1">Excepciones por Salud</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">Entendemos que las emergencias ocurren. En caso de enfermedad súbita, se podrá reagendar sin cargo <strong>presentando el soporte médico oficial</strong> de tu entidad de salud.</p>
+                </div>
+            </div>
+
+            <div class="flex gap-4 items-start bg-white/50 p-5 rounded-2xl border border-slate-100">
+                <div class="w-10 h-10 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                </div>
+                <div>
+                    <h2 class="font-bold text-slate-800 text-lg mb-1">Tolerancia</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">Contamos con un margen de espera de <strong>20 minutos</strong>. Pasado ese tiempo, si no hay conexión, la sesión se dará por concluida para no afectar al siguiente paciente.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
