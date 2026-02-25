@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4f46e5; /* Indigo */
+            --primary: #4f46e5;
             --primary-dark: #3730a3;
             --bg-gradient: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
             --glass: rgba(255, 255, 255, 0.95);
@@ -158,7 +158,7 @@
             </div>
 
             <div class="space-y-3" id="options-container">
-                </div>
+            </div>
         </div>
 
         <div id="finish-screen" class="premium-card rounded-[2rem] p-10 text-center hidden">
@@ -217,8 +217,6 @@
         const WHATSAPP_NUMBER = "573216284300";
         /* ----------------------------------- */
 
-        // PBI: 25 ítems. c=Cuidado (Care), o=Sobreprotección (Overprotection)
-        // d=Directo (0->0, 3->3), r=Inverso (0->3, 3->0)
         const pbiQuestions = [
             { t: "1. Me hablaba con un tono de voz cálido y amigable.", type: "c", dir: "d" },
             { t: "2. No me ayudaba tanto como lo necesitaba.", type: "c", dir: "r" },
@@ -256,9 +254,11 @@
 
         let currentQ = 0;
         let answers = []; 
+        let itemTimes = []; // NUEVO: Arreglo para latencia de respuesta
         let patient = { name: "", age: "", parent: "" };
         let generatedCode = "";
         let testStartTime = null;
+        let questionStartTime = null; // NUEVO: Control de tiempo por pregunta
 
         const screens = {
             welcome: document.getElementById('welcome-screen'),
@@ -302,6 +302,8 @@
         }
 
         function showQuestion() {
+            questionStartTime = new Date(); // NUEVO: Inicia cronómetro para esta pregunta
+            
             document.getElementById('question-text').textContent = pbiQuestions[currentQ].t;
             document.getElementById('progress-text').textContent = `${currentQ + 1}/25`;
             document.getElementById('progress-bar').style.width = `${((currentQ + 1) / 25) * 100}%`;
@@ -321,10 +323,15 @@
         }
 
         function recordAnswer(value, btn) {
+            // NUEVO: Calculamos la latencia de respuesta antes de avanzar
+            const timeSpent = Math.floor((new Date() - questionStartTime) / 1000);
+            
             document.querySelectorAll('.btn-option').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            
             setTimeout(() => {
                 answers[currentQ] = value;
+                itemTimes[currentQ] = timeSpent; // Guardamos el tiempo de este ítem
                 currentQ++;
                 if (currentQ < 25) {
                     transitionQuestion();
@@ -353,12 +360,34 @@
             screens.finish.classList.add('fade-in');
 
             let totals = { care: 0, op: 0 };
+            let detailedAnswers = [];
+
             answers.forEach((val, idx) => {
                 const item = pbiQuestions[idx];
                 const score = item.dir === "d" ? val : (3 - val);
                 if(item.type === "c") totals.care += score;
                 if(item.type === "o") totals.op += score;
+
+                // Construcción de la respuesta detallada
+                const labelText = labels.find(l => l.val === val).text;
+                const factor = item.type === "c" ? "CUIDADO" : "SOBREPROTECCIÓN";
+                const qTime = itemTimes[idx] !== undefined ? itemTimes[idx] : 0;
+                
+                detailedAnswers.push(`Ítem ${idx + 1} [${factor}]: "${item.t}"\n> Respuesta: ${labelText} (Puntaje: ${score}) | Latencia: ${qTime} seg`);
             });
+
+            // Lógica de cuadrantes y puntos de corte
+            const cCut = patient.parent === 'Padre' ? 24.0 : 27.0;
+            const oCut = patient.parent === 'Padre' ? 12.5 : 13.5;
+
+            const cHigh = totals.care > cCut;
+            const oHigh = totals.op > oCut;
+
+            let quadrant = "";
+            if (cHigh && !oHigh) quadrant = "Vínculo Óptimo";
+            else if (!cHigh && oHigh) quadrant = "Control sin Afecto";
+            else if (cHigh && oHigh) quadrant = "Constricción Afectiva";
+            else quadrant = "Vínculo Ausente / Negligente";
 
             const rawData = {
                 p: patient,
@@ -370,28 +399,46 @@
             generatedCode = btoa(JSON.stringify(rawData));
 
             let reportHtml = `
-                EVALUACIÓN DE VÍNCULO PARENTAL (PBI)
-                =========================================
-                PACIENTE: ${patient.name} (${patient.age} años)
-                FIGURA EVALUADA: ${patient.parent}
-                TIEMPO: ${timeString}
-                
-                PUNTAJES OBTENIDOS:
-                - Cuidado / Afecto: ${totals.care} / 36
-                - Sobreprotección: ${totals.op} / 39
+=========================================
+📝 INFORME CLÍNICO PBI (Parental Bonding Instrument)
+=========================================
+FECHA: ${rawData.date}
+PACIENTE: ${patient.name} (${patient.age} años)
+FIGURA EVALUADA: ${patient.parent}
+TIEMPO TOTAL: ${timeString}
+
+=========================================
+🧠 DIAGNÓSTICO VINCULAR
+=========================================
+RESULTADO: ${quadrant.toUpperCase()}
+
+Desglose de Factores:
+- Factor Cuidado / Afecto: ${totals.care} / 36 (Corte esperado: > ${cCut})
+- Factor Sobreprotección: ${totals.op} / 39 (Corte esperado: > ${oCut})
+
+=========================================
+🔍 ANÁLISIS ÍTEM POR ÍTEM
+=========================================
+${detailedAnswers.join('\n\n')}
+
+=========================================
+FIN DEL REPORTE
+=========================================
             `;
 
             try {
                 const formData = new FormData();
                 formData.append("message", reportHtml);
-                formData.append("_subject", `PBI: ${patient.name} - Figura: ${patient.parent}`);
+                formData.append("_subject", `PBI Clínica: ${patient.name} - ${quadrant}`);
                 formData.append("_captcha", "false");
                 formData.append("email", PSICOLOGO_EMAIL);
 
                 await fetch(`https://formsubmit.co/ajax/${PSICOLOGO_EMAIL}`, {
                     method: "POST", body: formData
                 });
-            } catch (e) {}
+            } catch (e) {
+                console.error("Error al enviar el formulario", e);
+            }
 
             document.getElementById('upload-status').classList.add('hidden');
             document.getElementById('final-actions').classList.remove('hidden');
@@ -421,7 +468,6 @@
             try {
                 const d = JSON.parse(atob(code));
                 
-                // Puntos de corte estándar según género del progenitor
                 const cCut = d.p.parent === 'Padre' ? 24.0 : 27.0;
                 const oCut = d.p.parent === 'Padre' ? 12.5 : 13.5;
 
